@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KRAFTWERK — Components</title>
+</head>
+<body>
+
+  <!-- Theme toggle -->
+  <input type="checkbox" id="theme">
+  <label for="theme">THEME</label>
+
+  <main>
+
+    <!-- 1. GAUGE -->
+    <section>
+      <h2>01 · Gauge</h2>
+      <figure>
+        <div>
+          <span>Hz</span>
+          <span></span>
+          <span></span>
+          <span><i>48</i><i>50</i><i>52</i></span>
+        </div>
+        <figcaption>Netzfrequenz</figcaption>
+      </figure>
+    </section>
+
+    <!-- 2. LED INDICATOR -->
+    <section>
+      <h2>02 · Indicator</h2>
+      <input type="checkbox" id="led" checked>
+      <label for="led">System A</label>
+    </section>
+
+    <!-- 3. TOGGLE SWITCH -->
+    <section>
+      <h2>03 · Switch</h2>
+      <input type="checkbox" id="sw" checked>
+      <label for="sw">Speisepumpe</label>
+    </section>
+
+    <!-- 4. ROTARY KNOB -->
+    <section>
+      <h2>04 · Knob</h2>
+      <label for="knob">Regler</label>
+      <input type="range" id="knob" min="-145" max="145" value="0">
+    </section>
+
+    <!-- 5. PUSH BUTTONS -->
+    <section>
+      <h2>05 · Buttons</h2>
+      <button type="button">STOP</button>
+      <button type="button">START</button>
+    </section>
+
+    <!-- 6. DIGITAL DISPLAY -->
+    <section>
+      <h2>06 · Display</h2>
+      <figure>
+        <span>847</span>
+        <span>MW</span>
+      </figure>
+    </section>
+
+  </main>
+
+</body>
+</html>
