@@ -64,3 +64,40 @@
 - [The uploaded photograph of an East German power station control room](https://live.staticflickr.com/65535/55045008234_0c5e94ce69_c.jpg)
 - [Kraftwerk Lippendorf control room (Wikipedia)](https://en.wikipedia.org/wiki/Lippendorf_power_station)
 - [Flickr: Abandoned power station control panels](https://www.flickr.com/search/?text=abandoned+power+station+control+room)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 19 februari 2026
+### What did i do today
+- Gave presentation for about initiation project, and listend to other presentations.
+- Math problems
+- Procrastinated
+- Started with base html of 1 of eecah element i plan to use
+- Styled 2 of the elemnts
+
+### how long did it take
+- 2 hours
+- 30 minutes
+- 30 minutes
+- 30 minutes
+- 1,5 hours
+
+### what did i learn
+- can use > to select direct children in css.
+- anchor positioning
+- carrousel styling
+- scroll driven animation
+
+### what do i want to do next
+- finish styling the rest of the elements
