@@ -1,0 +1,152 @@
+/* ── GAUGE ───────────────────────────────────────────────────── */
+
+main > section:first-of-type > figure {
+    width: 8rem;
+    background: #c6c2b8;
+    border: 1px solid #9a9690;
+    border-radius: 2px;
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Gauge face */
+main > section:first-of-type > figure > div {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background: #f8f4ec;
+    border: 1px solid #ccc9c0;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scale tick marks */
+main > section:first-of-type > figure > div::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(10% - 0.5px),
+      rgba(0, 0, 0, 0.1) calc(10% - 0.5px),
+      rgba(0, 0, 0, 0.1) 10%
+    );
+}
+
+/* Unit label */
+main > section:first-of-type > figure > div > span:first-child {
+    position: absolute;
+    top: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: monospace;
+    font-size: 0.45rem;
+    color: #6a6860;
+    white-space: nowrap;
+}
+
+/* Arc */
+main > section:first-of-type > figure > div > span:nth-child(2) {
+    position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72%;
+    height: 38%;
+    border: 1.5px solid rgba(0, 0, 0, 0.18);
+    border-bottom: none;
+    border-radius: 100% 100% 0 0;
+}
+
+/* Needle */
+main > section:first-of-type > figure > div > span:nth-child(3) {
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(-50deg);
+    width: 1.5px;
+    height: 36%;
+    background: linear-gradient(to top, #882200, #cc2200);
+    box-shadow: 0 0 1px rgba(204, 34, 0, 0.8);
+    border-radius: 1px 1px 0 0;
+    transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+/* Needle center pivot dot */
+main > section:first-of-type > figure > div > span:nth-child(3)::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background: #1a1a18;
+    border-radius: 50%;
+}
+
+/* Scale numbers */
+main > section:first-of-type > figure > div > span:last-child {
+    position: absolute;
+    bottom: 0.1rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.2rem;
+    font-family: monospace;
+    font-size: 0.3rem;
+    color: #6a6860;
+}
+
+/* Caption */
+main > section:first-of-type > figure > figcaption {
+    font-family: monospace;
+    font-size: 0.35rem;
+    color: #6a6860;
+    text-align: center;
+}
+
+/* ── INDICATOR ───────────────────────────────────────────────── */
+
+/* Hide the actual checkbox */
+main > section:nth-of-type(2) > input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* LED light */
+main > section:nth-of-type(2) > input[type="checkbox"] + label {
+    display: block;
+    width: 2.2rem;
+    height: 1.2rem;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    background: #0a2a12;
+    cursor: pointer;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.4),
+        0 1px rgba(255, 255, 255, 0.1);
+    transition: background 150ms, box-shadow 150ms;
+}
+
+/* LED on */
+main > section:nth-of-type(2) > input[type="checkbox"]:checked + label {
+    background: #00dd55;
+    box-shadow:
+        0 0 8px rgba(0, 221, 85, 0.55),
+        0 0 16px rgba(0, 221, 85, 0.25);
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.65; }
+}
