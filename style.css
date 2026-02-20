@@ -59,7 +59,7 @@ main > section:first-of-type > figure > div > span:nth-child(2) {
     height: 38%;
     border: 1.5px solid rgba(0, 0, 0, 0.18);
     border-bottom: none;
-    border-radius: 100% 100% 0 0;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
 }
 
 /* Needle */
