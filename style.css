@@ -150,3 +150,58 @@ main > section:nth-of-type(2) > input[type="checkbox"]:checked + label {
     0%, 100% { opacity: 1; }
     50%       { opacity: 0.65; }
 }
+
+/* ── TOGGLE SWITCH ───────────────────────────────────────────── */
+
+/* Hide the actual checkbox */
+main > section:nth-of-type(3) > input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Switch label wrapper */
+main > section:nth-of-type(3) > input[type="checkbox"] + label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+/* Switch housing */
+main > section:nth-of-type(3) > input[type="checkbox"] + label::before {
+    content: '';
+    display: block;
+    width: 0.9rem;
+    height: 2.2rem;
+    background:
+        linear-gradient(to bottom, #e0ddd5 0, #e0ddd5 0.8rem, transparent 0.8rem),
+        linear-gradient(to bottom, #8a8a80, #5a5a50);
+    border-radius: 2px;
+    border: 1px solid #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+    transition: background 150ms;
+}
+
+/* Label text — off state */
+main > section:nth-of-type(3) > input[type="checkbox"] + label::after {
+    content: 'OFF';
+    font-family: monospace;
+    font-size: 0.35rem;
+    letter-spacing: 0.1em;
+    color: #6a6860;
+}
+
+/* Switch DOWN — on state */
+main > section:nth-of-type(3) > input[type="checkbox"]:checked + label::before {
+    background:
+        linear-gradient(to bottom, transparent 0, transparent 1.35rem, #e0ddd5 1.35rem),
+        linear-gradient(to bottom, #8a8a80, #5a5a50);
+}
+
+/* Label text — on state */
+main > section:nth-of-type(3) > input[type="checkbox"]:checked + label::after {
+    content: 'ON';
+    color: #00dd55;
+}
