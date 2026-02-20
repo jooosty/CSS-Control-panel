@@ -205,3 +205,74 @@ main > section:nth-of-type(3) > input[type="checkbox"]:checked + label::after {
     content: 'ON';
     color: #00dd55;
 }
+/* ── ROTARY KNOB ─────────────────────────────────────────────── */
+
+:root {
+    --knob: 0;
+}
+
+/* Knob face */
+main>section:nth-of-type(4)>div>span {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
+        radial-gradient(circle at 50% 50%, #2e2e2a 0, #1b1b18 62%, #0f0f0d 100%);
+    border: 2px solid #0a0a08;
+    position: relative;
+    pointer-events: none;
+    transform: rotate(calc(var(--knob) * 1deg));
+    transition: transform 120ms linear;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.18),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.55),
+        0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Tick mark on top of the knob face */
+main>section:nth-of-type(4)>div>span::before {
+    content: '';
+    position: absolute;
+    top: 0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 0.7rem;
+    background: #ccccbb;
+    border-radius: 1px;
+    box-shadow: 0 0 2px rgba(255, 245, 190, 0.45);
+}
+
+/* Center cap */
+main>section:nth-of-type(4)>div>span::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #5f5f57, #1a1a17);
+    border: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+/* Put slider on top of the knob face */
+main>section:nth-of-type(4)>div>input[type="range"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+/* Make slider size of knob */
+main>section:nth-of-type(4)>div {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+}
