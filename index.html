@@ -11,8 +11,11 @@
 </head>
 <body>
 
-    <!-- State checkboxes — outside main so ~ selector reaches all sections -->
-    <input type="checkbox" id="plant-state">
+    <!-- :target anchors for plant state — only permitted use of id in CSS -->
+    <div id="running"></div>
+    <div id="stopped"></div>
+
+    <!-- Switch checkboxes — id used only for label linking (permitted) -->
     <input type="checkbox" id="sw-1" checked>
     <input type="checkbox" id="sw-2">
     <input type="checkbox" id="sw-3" checked>
@@ -85,7 +88,7 @@
             <label for="led-6"></label>
         </section>
 
-        <!-- TOGGLE SWITCHES -->
+        <!-- TOGGLE SWITCHES — labels link to checkboxes outside main -->
         <section aria-label="System switches">
             <label for="sw-1">Pump A</label>
             <label for="sw-2">Pump B</label>
@@ -119,10 +122,10 @@
             <label for="knob-power">Power</label>
         </section>
 
-        <!-- BUTTONS -->
+        <!-- BUTTONS — anchor links toggle :target state -->
         <section aria-label="Plant controls">
-            <label for="plant-state">STOP</label>
-            <label for="plant-state">START</label>
+            <a href="#stopped">STOP</a>
+            <a href="#running">START</a>
         </section>
 
         <!-- DISPLAY -->
@@ -130,10 +133,6 @@
             <figure>
                 <span>847</span>
                 <span>MW</span>
-            </figure>
-            <figure>
-                <span></span>
-                <span>UPTIME</span>
             </figure>
         </section>
 

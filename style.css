@@ -1,10 +1,12 @@
 /* ============================================================
    KRAFTWERK — Control Panel
    ──────────────────────────────────────────────────────────
-   Architecture : @layer, CSS nesting, @container queries
+   Architecture : @layer, CSS nesting, @container queries,
+                  style queries (@container style())
    Themes       : light (default) + dark (prefers-color-scheme)
    Fonts        : Orbitron (title), Share Tech Mono (UI)
    JS           : range script only (permitted)
+   State        : :target for plant on/off, checkboxes for switches
    ============================================================ */
 
 /* MARK: LAYERS */
@@ -26,12 +28,12 @@
 @layer tokens {
 
     :root {
-        /* Knob custom properties — set by JS */
+        /* Knob values — driven by JS range script */
         --knob-freq: 0;
         --knob-pressure: 0;
         --knob-temp: 0;
         --knob-power: 0;
-        container-type: style;  /* enables style queries on custom properties */
+        container-type: style;
 
         /* Light theme */
         --color-bg:           #1c1c18;
@@ -57,12 +59,12 @@
         --font-mono:    'Share Tech Mono', monospace;
 
         /* Spacing */
-        --gap-sm:   0.4rem;
-        --gap-md:   0.75rem;
-        --gap-lg:   1.5rem;
-        --pad-sm:   0.5rem 0.75rem;
-        --pad-md:   0.75rem;
-        --radius:   2px;
+        --gap-sm:  0.4rem;
+        --gap-md:  0.75rem;
+        --gap-lg:  1.5rem;
+        --pad-sm:  0.5rem 0.75rem;
+        --pad-md:  0.75rem;
+        --radius:  2px;
     }
 
     /* Dark theme */
@@ -103,11 +105,16 @@
         color: var(--color-text);
     }
 
-    /* Hidden state checkboxes */
-    [id="plant-state"],
-    [id="sw-1"],
-    [id="sw-2"],
-    [id="sw-3"] {
+    /* :target anchor divs — hidden, used only for state */
+    body > div {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Switch checkboxes — hidden, id used only for label linking */
+    body > input[type="checkbox"] {
         position: absolute;
         opacity: 0;
         width: 0;
@@ -170,7 +177,7 @@
             inset 0 -2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    /* Gauges — 2x2 grid */
+    /* Gauges — 2×2 grid */
     main > section:first-of-type {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -244,7 +251,9 @@
         border-radius: var(--radius);
         padding: 0.5rem;
         display: flex;
+        gap: 0.75rem;
         justify-content: center;
+        align-items: center;
         box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 }
@@ -266,7 +275,6 @@
         align-items: center;
         gap: 0.3rem;
 
-        /* Gauge face */
         & > div {
             width: 100%;
             aspect-ratio: 3 / 2;
@@ -275,6 +283,20 @@
             border-radius: 2px 2px 0 0;
             position: relative;
             overflow: hidden;
+
+            /* Scale tick marks */
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: repeating-linear-gradient(
+                    90deg,
+                    transparent 0,
+                    transparent calc(10% - 0.5px),
+                    rgba(0, 0, 0, 0.1) calc(10% - 0.5px),
+                    rgba(0, 0, 0, 0.1) 10%
+                );
+            }
 
             /* Scanline overlay */
             &::after {
@@ -292,21 +314,6 @@
                 z-index: 1;
             }
 
-            /* Scale tick marks */
-            &::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: repeating-linear-gradient(
-                    90deg,
-                    transparent 0,
-                    transparent calc(10% - 0.5px),
-                    rgba(0, 0, 0, 0.1) calc(10% - 0.5px),
-                    rgba(0, 0, 0, 0.1) 10%
-                );
-            }
-
-            /* Unit label */
             & > span:first-child {
                 position: absolute;
                 top: 0.25rem;
@@ -318,7 +325,6 @@
                 white-space: nowrap;
             }
 
-            /* Arc */
             & > span:nth-child(2) {
                 position: absolute;
                 bottom: 0.3rem;
@@ -331,7 +337,7 @@
                 border-radius: 50% 50% 0 0 / 100% 100% 0 0;
             }
 
-            /* Needle */
+            /* Needle — default parked at -65deg */
             & > span:nth-child(3) {
                 position: absolute;
                 bottom: 0.25rem;
@@ -345,7 +351,6 @@
                 border-radius: 1px 1px 0 0;
                 transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
 
-                /* Pivot dot */
                 &::after {
                     content: '';
                     position: absolute;
@@ -359,7 +364,6 @@
                 }
             }
 
-            /* Scale numbers */
             & > span:last-child {
                 position: absolute;
                 bottom: 0.1rem;
@@ -374,7 +378,6 @@
             }
         }
 
-        /* Caption */
         & > figcaption {
             font-family: var(--font-mono);
             font-size: 0.35rem;
@@ -434,10 +437,7 @@
         display: none;
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0.65; }
-    }
+
 
     /* MARK: TOGGLE SWITCH */
 
@@ -469,7 +469,6 @@
             transition: background 150ms;
         }
 
-        /* State text — OFF */
         &::after {
             content: 'OFF';
             font-size: 0.3rem;
@@ -497,7 +496,6 @@
             inset 0 -2px 4px rgba(0, 0, 0, 0.55),
             0 2px 5px rgba(0, 0, 0, 0.4);
 
-        /* Tick mark */
         &::before {
             content: '';
             position: absolute;
@@ -511,7 +509,6 @@
             box-shadow: 0 0 2px rgba(255, 245, 190, 0.45);
         }
 
-        /* Center cap */
         &::after {
             content: '';
             position: absolute;
@@ -526,7 +523,6 @@
         }
     }
 
-    /* Per-knob rotation */
     main > section:nth-of-type(4) > div:nth-of-type(2) > span {
         transform: rotate(calc(var(--knob-pressure) * 1deg));
     }
@@ -537,7 +533,6 @@
         transform: rotate(calc(var(--knob-power) * 1deg));
     }
 
-    /* Invisible range on top */
     main > section:nth-of-type(4) > div > input[type="range"] {
         position: absolute;
         inset: 0;
@@ -549,7 +544,7 @@
 
     /* MARK: BUTTONS */
 
-    main > section:nth-of-type(5) > label {
+    main > section:nth-of-type(5) > a {
         font-family: var(--font-mono);
         font-size: 0.5rem;
         letter-spacing: 0.15em;
@@ -560,6 +555,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
         transition: transform 80ms, box-shadow 80ms;
         user-select: none;
 
@@ -614,17 +610,20 @@
         align-items: center;
         gap: 0.2rem;
         box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
-        width: 8rem;
 
-        & > span:first-child {
-            font-family: var(--font-mono);
-            font-size: 2rem;
-            color: var(--color-display-num);
-            letter-spacing: 0.2em;
-            text-shadow:
-                0 0 10px rgba(255, 34, 0, 0.45),
-                0 0 25px rgba(255, 34, 0, 0.25);
-            animation: flicker 5s infinite;
+        &:first-of-type {
+            width: 8rem;
+
+            & > span:first-child {
+                font-family: var(--font-mono);
+                font-size: 2rem;
+                color: var(--color-display-num);
+                letter-spacing: 0.2em;
+                text-shadow:
+                    0 0 10px rgba(255, 34, 0, 0.45),
+                    0 0 25px rgba(255, 34, 0, 0.25);
+                animation: flicker 5s infinite;
+            }
         }
 
         & > span:last-child {
@@ -635,43 +634,50 @@
         }
     }
 
-    @keyframes flicker {
-        0%, 90%, 100% { opacity: 1; }
-        91%            { opacity: 0.7; }
-        95%            { opacity: 1; }
-        97%            { opacity: 0.85; }
-    }
+
+
 }
+
 
 /* MARK: STATE */
 
 @layer state {
 
-    /* MARK: GAUGE NEEDLE → KNOB BINDING */
+    /* MARK: GAUGE NEEDLE → KNOB BINDING
+       Only active when #running is :target (plant is on) */
 
-    main > section:first-of-type > figure:first-of-type > div > span:nth-child(3) {
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(calc(var(--knob-freq) * 0.48deg));
     }
-    main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(calc(var(--knob-pressure) * 0.48deg));
     }
-    main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(calc(var(--knob-temp) * 0.48deg));
     }
-    main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(calc(var(--knob-power) * 0.48deg));
     }
 
-    /* MARK: STOP/START */
+    /* MARK: UPTIME — runs only when plant is on */
 
-    [id="plant-state"]:not(:checked) ~ main > section:first-of-type > figure > div > span:nth-child(3) {
-        transform: translateX(-50%) rotate(-65deg);
-        transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+
+    /* MARK: DISPLAY DIM — off by default, lit when running */
+
+    main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
+        opacity: 0.15;
+        animation: none;
     }
 
-    /* MARK: SWITCH ON STATES */
+    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
+        opacity: 1;
+        animation: flicker 5s infinite;
+    }
 
-    [id="sw-1"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(1) {
+    /* MARK: SWITCH ON STATES
+       Selects by position — sw-1 is 1st checkbox, sw-2 is 2nd, sw-3 is 3rd */
+
+    body > input[type="checkbox"]:nth-of-type(1):checked ~ main > section:nth-of-type(3) > label:nth-of-type(1) {
         &::before {
             background:
                 linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
@@ -680,7 +686,7 @@
         &::after { content: 'ON'; color: var(--color-led-on); }
     }
 
-    [id="sw-2"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(2) {
+    body > input[type="checkbox"]:nth-of-type(2):checked ~ main > section:nth-of-type(3) > label:nth-of-type(2) {
         &::before {
             background:
                 linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
@@ -689,7 +695,7 @@
         &::after { content: 'ON'; color: var(--color-led-on); }
     }
 
-    [id="sw-3"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(3) {
+    body > input[type="checkbox"]:nth-of-type(3):checked ~ main > section:nth-of-type(3) > label:nth-of-type(3) {
         &::before {
             background:
                 linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
@@ -700,43 +706,40 @@
 
     /* MARK: LED CONTROL BY SWITCHES */
 
-    /* Pump A → LEDs 1+2 */
-    [id="sw-1"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
-    [id="sw-1"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
+    body > input[type="checkbox"]:nth-of-type(1):checked ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
+    body > input[type="checkbox"]:nth-of-type(1):checked ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
         background: var(--color-led-on);
         box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
         animation: pulse 2.5s ease-in-out infinite;
     }
-    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
-    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
         background: var(--color-led-off);
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
         animation: none;
     }
 
-    /* Pump B → LEDs 3+4 */
-    [id="sw-2"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
-    [id="sw-2"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
+    body > input[type="checkbox"]:nth-of-type(2):checked ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
+    body > input[type="checkbox"]:nth-of-type(2):checked ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
         background: var(--color-led-on);
         box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
         animation: pulse 2.5s ease-in-out infinite;
     }
-    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
-    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
         background: var(--color-led-off);
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
         animation: none;
     }
 
-    /* Turbine → LEDs 5+6 */
-    [id="sw-3"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
-    [id="sw-3"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
+    body > input[type="checkbox"]:nth-of-type(3):checked ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
+    body > input[type="checkbox"]:nth-of-type(3):checked ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
         background: var(--color-led-on);
         box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
         animation: pulse 2.5s ease-in-out infinite;
     }
-    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
-    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
         background: var(--color-led-off);
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
         animation: none;
@@ -744,186 +747,106 @@
 
     /* MARK: KNOB DISABLE BY SWITCHES */
 
-    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(2) {
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(2) {
         opacity: 0.3;
         pointer-events: none;
     }
-    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(3) {
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(3) {
         opacity: 0.3;
         pointer-events: none;
     }
-    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(1),
-    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(4) {
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(1),
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(4) {
         opacity: 0.3;
         pointer-events: none;
     }
 
     /* MARK: GAUGE DROP BY SWITCHES */
 
-    [id="sw-1"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(-65deg);
     }
-    [id="sw-2"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(-65deg);
     }
-    [id="sw-3"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3),
-    [id="sw-3"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3),
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
         transform: translateX(-50%) rotate(-65deg);
     }
 
     /* MARK: WARNING — switch off while plant running */
 
-    [id="plant-state"]:checked ~ [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(3),
-    [id="plant-state"]:checked ~ [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(3),
-    [id="plant-state"]:checked ~ [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(3) {
+    #running:target ~ main > section:nth-of-type(3) {
+        /* base — no warning */
+    }
+
+    #running:target ~ main:has(~ * input[type="checkbox"]:nth-of-type(1):not(:checked)) > section:nth-of-type(3),
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(3),
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(3),
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(3) {
         background: #3a1a10;
         border-color: #cc4400;
     }
 
-    /* MARK: DISPLAY DIM — turbine off */
-
-    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(6) > figure > span:first-child {
-        opacity: 0.15;
-        animation: none;
-    }
-}
-
-/* MARK: RESPONSIVE */
-
-/* Container query — gauge grid responds to panel width, not viewport */
-@container panel (max-width: 28rem) {
-    main > section:first-of-type {
-        grid-template-columns: 1fr;
-    }
-
-    main > section:nth-of-type(4) {
-        gap: var(--gap-md);
-        flex-wrap: wrap;
-    }
-}
-
-/* Viewport query — overall layout at small screens */
-@media (max-width: 30rem) {
-    main {
-        padding: var(--gap-md);
-        gap: var(--gap-md);
-    }
-
+    /* But only show warning when plant is running */
+    #stopped:target ~ main > section:nth-of-type(3),
     main > section:nth-of-type(3) {
-        gap: var(--gap-md);
-    }
-
-    main > section:nth-of-type(5) > label {
-        width: 2.8rem;
-        font-size: 0.4rem;
-    }
-
-    header > h1 {
-        font-size: clamp(1.2rem, 8vw, 2rem);
-    }
-}
-
-/* MARK: OVERLOAD WARNING */
-
-@keyframes overload-flash {
-    0%, 100% {
-        box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.6),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1),
-            inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        background: var(--color-section);
         border-color: var(--color-panel-border);
     }
-    50% {
-        box-shadow:
-            0 0 0 3px #cc4400,
-            0 0 40px rgba(204, 68, 0, 0.6),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        border-color: #ff5500;
-    }
-}
 
-@keyframes overload-display {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.2; }
-}
+    /* MARK: OVERLOAD WARNING — all knobs at max */
 
-@container style(--knob-power: 145) {
-    @container style(--knob-freq: 145) {
-        @container style(--knob-pressure: 145) {
-            @container style(--knob-temp: 145) {
-                [id="plant-state"]:checked ~ [id="sw-1"]:checked ~ [id="sw-2"]:checked ~ [id="sw-3"]:checked ~ main {
-                    animation: overload-flash 0.6s ease-in-out infinite;
-                }
-
-                [id="plant-state"]:checked ~ [id="sw-1"]:checked ~ [id="sw-2"]:checked ~ [id="sw-3"]:checked ~ main > section:nth-of-type(6) > figure > span:first-child {
-                    animation: overload-display 0.6s ease-in-out infinite;
-                    color: #ff5500;
-                    text-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+    @container style(--knob-power: 145) {
+        @container style(--knob-freq: 145) {
+            @container style(--knob-pressure: 145) {
+                @container style(--knob-temp: 145) {
+                    #running:target ~ main {
+                        animation: overload-flash 0.6s ease-in-out infinite;
+                    }
+                    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
+                        animation: overload-display 0.6s ease-in-out infinite;
+                        color: #ff5500;
+                        text-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+                    }
                 }
             }
         }
     }
 }
 
-/* MARK: UPTIME COUNTER */
+/* MARK: RESPONSIVE */
 
-/* Animate an integer custom property using @property */
-@property --uptime {
-    syntax: '<integer>';
-    inherits: false;
-    initial-value: 0;
-}
-
-@keyframes count-up {
-    from { --uptime: 0; }
-    to   { --uptime: 9999; }
-}
-
-/* Second display figure — uptime */
-main > section:nth-of-type(6) > figure:last-of-type {
-    background: var(--color-display-bg);
-    border: 1px solid #222;
-    border-radius: var(--radius);
-    padding: 0.4rem 0.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
-
-    /* Uptime number via counter on ::before */
-    & > span:first-child {
-        animation: count-up 9999s linear forwards;
-        counter-reset: uptime var(--uptime);
-        font-family: var(--font-mono);
-        font-size: 1rem;
-        color: var(--color-display-num);
-        letter-spacing: 0.15em;
-        text-shadow:
-            0 0 8px rgba(255, 34, 0, 0.4),
-            0 0 20px rgba(255, 34, 0, 0.2);
-
-        &::before {
-            content: counter(uptime, decimal-leading-zero);
-        }
+@container panel (max-width: 28rem) {
+    main > section:first-of-type {
+        grid-template-columns: 1fr;
     }
-
-    & > span:last-child {
-        font-family: var(--font-mono);
-        font-size: 0.35rem;
-        color: #444;
-        letter-spacing: 0.2em;
+    main > section:nth-of-type(4) {
+        gap: var(--gap-md);
+        flex-wrap: wrap;
     }
 }
 
-/* Uptime pauses when plant is stopped */
-[id="plant-state"]:not(:checked) ~ main > section:nth-of-type(6) > figure:last-of-type > span:first-child {
-    animation-play-state: paused;
-    opacity: 0.15;
+@media (max-width: 30rem) {
+    main {
+        padding: var(--gap-md);
+        gap: var(--gap-md);
+    }
+    main > section:nth-of-type(3) {
+        gap: var(--gap-md);
+    }
+    main > section:nth-of-type(5) > a {
+        width: 2.8rem;
+        font-size: 0.4rem;
+    }
+    header > h1 {
+        font-size: clamp(1.2rem, 8vw, 2rem);
+    }
 }
 
-/* Layout — display section shows two figures side by side */
-main > section:nth-of-type(6) {
-    gap: 0.75rem;
-    align-items: center;
+@media (prefers-reduced-motion: reduce) {
+    @keyframes pulse        { 0%, 100% { opacity: 1; } }
+    @keyframes flicker      { 0%, 100% { opacity: 1; } }
+    @keyframes overload-flash   { 0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.6); } }
+    @keyframes overload-display { 0%, 100% { opacity: 1; } }
 }
