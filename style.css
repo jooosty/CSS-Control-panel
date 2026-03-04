@@ -59,7 +59,7 @@ main > section:first-of-type > figure > div > span:nth-child(2) {
     height: 38%;
     border: 1.5px solid rgba(0, 0, 0, 0.18);
     border-bottom: none;
-    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
 /* Needle */
@@ -127,7 +127,7 @@ main > section:nth-of-type(2) > input[type="checkbox"] {
 }
 
 /* LED light */
-main>section:nth-of-type(2)>input[type="checkbox"]::before {
+main > section:nth-of-type(2) > input[type="checkbox"]::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -141,7 +141,7 @@ main>section:nth-of-type(2)>input[type="checkbox"]::before {
 }
 
 /* LED core */
-main>section:nth-of-type(2)>input[type="checkbox"]::after {
+main > section:nth-of-type(2) > input[type="checkbox"]::after {
     content: '';
     position: absolute;
     inset: 0.15rem;
@@ -151,7 +151,7 @@ main>section:nth-of-type(2)>input[type="checkbox"]::after {
 }
 
 /* LED on */
-main>section:nth-of-type(2)>input[type="checkbox"]:checked::before {
+main > section:nth-of-type(2) > input[type="checkbox"]:checked::before {
     background: #00dd55;
     box-shadow:
         0 0 8px rgba(0, 221, 85, 0.55),
@@ -159,12 +159,12 @@ main>section:nth-of-type(2)>input[type="checkbox"]:checked::before {
     animation: pulse 2.5s ease-in-out infinite;
 }
 
-main>section:nth-of-type(2)>input[type="checkbox"]:checked::after {
+main > section:nth-of-type(2) > input[type="checkbox"]:checked::after {
     background: rgba(255, 255, 255, 0.12);
 }
 
 /* Keep label only as semantic click target */
-main>section:nth-of-type(2)>input[type="checkbox"]+label {
+main > section:nth-of-type(2) > input[type="checkbox"] + label {
     display: none;
 }
 
@@ -178,20 +178,20 @@ main>section:nth-of-type(2)>input[type="checkbox"]+label {
 /* Styled checkbox */
 main > section:nth-of-type(3) > input[type="checkbox"] {
     appearance: none;
-        position: relative;
-        margin: 0;
-        width: 0.9rem;
-        height: 2.2rem;
+    position: relative;
+    margin: 0;
+    width: 0.9rem;
+    height: 2.2rem;
     cursor: pointer;
     background: transparent;
-        border: none;
+    border: none;
 }
 
 /* Switch housing */
-main>section:nth-of-type(3)>input[type="checkbox"]::before {
+main > section:nth-of-type(3) > input[type="checkbox"]::before {
     content: '';
     position: absolute;
-        inset: 0;
+    inset: 0;
     width: 0.9rem;
     height: 2.2rem;
     background:
@@ -204,12 +204,12 @@ main>section:nth-of-type(3)>input[type="checkbox"]::before {
 }
 
 /* State text — off state */
-main>section:nth-of-type(3)>input[type="checkbox"]::after {
+main > section:nth-of-type(3) > input[type="checkbox"]::after {
     content: 'OFF';
     position: absolute;
-        top: calc(100% + 0.25rem);
-        left: 50%;
-        transform: translateX(-50%);
+    top: calc(100% + 0.25rem);
+    left: 50%;
+    transform: translateX(-50%);
     font-family: monospace;
     font-size: 0.35rem;
     letter-spacing: 0.1em;
@@ -217,33 +217,42 @@ main>section:nth-of-type(3)>input[type="checkbox"]::after {
 }
 
 /* Switch DOWN — on state */
-main>section:nth-of-type(3)>input[type="checkbox"]:checked::before {
+main > section:nth-of-type(3) > input[type="checkbox"]:checked::before {
     background:
         linear-gradient(to bottom, transparent 0, transparent 1.35rem, #e0ddd5 1.35rem),
         linear-gradient(to bottom, #8a8a80, #5a5a50);
 }
 
 /* State text — on state */
-main>section:nth-of-type(3)>input[type="checkbox"]:checked::after {
+main > section:nth-of-type(3) > input[type="checkbox"]:checked::after {
     content: 'ON';
     color: #00dd55;
 }
+
 /* Keep component caption style */
-main>section:nth-of-type(3)>input[type="checkbox"]+label {
+main > section:nth-of-type(3) > input[type="checkbox"] + label {
     margin-top: 0.6rem;
     font-family: monospace;
     font-size: 0.35rem;
     color: #6a6860;
     cursor: pointer;
 }
+
 /* ── ROTARY KNOB ─────────────────────────────────────────────── */
 
 :root {
     --knob: 0;
 }
 
+/* Knob wrapper */
+main > section:nth-of-type(4) > div {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+}
+
 /* Knob face */
-main>section:nth-of-type(4)>div>span {
+main > section:nth-of-type(4) > div > span {
     display: block;
     width: 3rem;
     height: 3rem;
@@ -262,8 +271,8 @@ main>section:nth-of-type(4)>div>span {
         0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Tick mark on top of the knob face */
-main>section:nth-of-type(4)>div>span::before {
+/* Tick mark */
+main > section:nth-of-type(4) > div > span::before {
     content: '';
     position: absolute;
     top: 0.2rem;
@@ -277,7 +286,7 @@ main>section:nth-of-type(4)>div>span::before {
 }
 
 /* Center cap */
-main>section:nth-of-type(4)>div>span::after {
+main > section:nth-of-type(4) > div > span::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -290,8 +299,8 @@ main>section:nth-of-type(4)>div>span::after {
     border: 1px solid rgba(0, 0, 0, 0.55);
 }
 
-/* Put slider on top of the knob face */
-main>section:nth-of-type(4)>div>input[type="range"] {
+/* Range sits invisibly on top — captures interaction */
+main > section:nth-of-type(4) > div > input[type="range"] {
     position: absolute;
     top: 0;
     left: 0;
@@ -301,9 +310,54 @@ main>section:nth-of-type(4)>div>input[type="range"] {
     opacity: 0;
 }
 
-/* Make slider size of knob */
-main>section:nth-of-type(4)>div {
-    position: relative;
-    width: 3rem;
-    height: 3rem;
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+
+main > section:nth-of-type(5) > button {
+    font-family: monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    width: 3.5rem;
+    height: 1.6rem;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 80ms, box-shadow 80ms;
+}
+
+main > section:nth-of-type(5) > button:active {
+    transform: translateY(2px);
+}
+
+/* STOP */
+main > section:nth-of-type(5) > button:first-of-type {
+    background: linear-gradient(to bottom, #dd1500, #aa1100);
+    color: #ffbbbb;
+    box-shadow:
+        0 3px 0 #660a00,
+        0 5px 10px rgba(0, 0, 0, 0.4),
+        inset 0 1px rgba(255, 130, 130, 0.25);
+}
+
+main > section:nth-of-type(5) > button:first-of-type:active {
+    box-shadow:
+        0 1px 0 #660a00,
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 1px rgba(255, 130, 130, 0.25);
+}
+
+/* START */
+main > section:nth-of-type(5) > button:last-of-type {
+    background: linear-gradient(to bottom, #007700, #005500);
+    color: #aaffaa;
+    box-shadow:
+        0 3px 0 #002200,
+        0 5px 10px rgba(0, 0, 0, 0.4),
+        inset 0 1px rgba(130, 255, 130, 0.15);
+}
+
+main > section:nth-of-type(5) > button:last-of-type:active {
+    box-shadow:
+        0 1px 0 #002200,
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 1px rgba(130, 255, 130, 0.15);
 }
