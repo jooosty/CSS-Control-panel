@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRAFTWERK — Components</title>
+    <title>KRAFTWERK — Control Panel</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,9 +14,8 @@
 
     <main>
 
-        <!-- 1. GAUGE -->
+        <!-- GAUGES -->
         <section>
-            <h2>01 · Gauge</h2>
             <figure>
                 <div>
                     <span>Hz</span>
@@ -24,44 +23,99 @@
                     <span></span>
                     <span><i>48</i><i>50</i><i>52</i></span>
                 </div>
-                <figcaption>Netzfrequenz</figcaption>
+                <figcaption>Frequency</figcaption>
+            </figure>
+            <figure>
+                <div>
+                    <span>bar</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>100</i><i>200</i></span>
+                </div>
+                <figcaption>Pressure</figcaption>
+            </figure>
+            <figure>
+                <div>
+                    <span>°C</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>300</i><i>600</i></span>
+                </div>
+                <figcaption>Temperature</figcaption>
+            </figure>
+            <figure>
+                <div>
+                    <span>MW</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>500</i><i>1000</i></span>
+                </div>
+                <figcaption>Power</figcaption>
             </figure>
         </section>
 
-        <!-- 2. LED INDICATOR -->
+        <!-- INDICATORS -->
         <section>
-            <h2>02 · Indicator</h2>
-            <input type="checkbox" id="led" checked>
-            <label for="led"></label>
+            <input type="checkbox" id="led-1" checked>
+            <label for="led-1"></label>
+
+            <input type="checkbox" id="led-2" checked>
+            <label for="led-2"></label>
+
+            <input type="checkbox" id="led-3">
+            <label for="led-3"></label>
+
+            <input type="checkbox" id="led-4" checked>
+            <label for="led-4"></label>
+
+            <input type="checkbox" id="led-5" checked>
+            <label for="led-5"></label>
+
+            <input type="checkbox" id="led-6">
+            <label for="led-6"></label>
         </section>
 
-        <!-- 3. TOGGLE SWITCH -->
+        <!-- TOGGLE SWITCHES -->
         <section>
-            <h2>03 · Switch</h2>
-            <input type="checkbox" id="sw" checked>
-            <label for="sw">Speisepumpe</label>
-            </section>
+            <input type="checkbox" id="sw-1" checked>
+            <label for="sw-1">Pump A</label>
 
-        <!-- 4. ROTARY KNOB -->
+            <input type="checkbox" id="sw-2">
+            <label for="sw-2">Pump B</label>
+
+            <input type="checkbox" id="sw-3" checked>
+            <label for="sw-3">Turbine</label>
+        </section>
+
+        <!-- ROTARY KNOBS -->
         <section>
-            <h2>04 · Knob</h2>
             <div>
                 <span></span>
-                <input type="range" id="knob" name="knob" min="-145" max="145" value="0">
+                <input type="range" id="knob-pressure" name="knob-pressure" min="-145" max="145" value="-40">
             </div>
-            <label for="knob">Regler</label>
+            <label for="knob-pressure">Pressure</label>
+
+            <div>
+                <span></span>
+                <input type="range" id="knob-temp" name="knob-temp" min="-145" max="145" value="20">
+            </div>
+            <label for="knob-temp">Temp</label>
+
+            <div>
+                <span></span>
+                <input type="range" id="knob-power" name="knob-power" min="-145" max="145" value="80">
+            </div>
+            <label for="knob-power">Power</label>
         </section>
 
-        <!-- 5. PUSH BUTTONS -->
+        <!-- BUTTONS -->
         <section>
-            <h2>05 · Buttons</h2>
             <button type="button">STOP</button>
             <button type="button">START</button>
         </section>
 
-        <!-- 6. DIGITAL DISPLAY -->
+        <!-- DISPLAY -->
         <section>
-            <h2>06 · Display</h2>
             <figure>
                 <span>847</span>
                 <span>MW</span>
