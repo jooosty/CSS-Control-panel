@@ -46,8 +46,8 @@
         --color-text:         #e8dfc0;
         --color-text-dim:     #a89e80;
         --color-needle:       #c83200;
-        --color-led-off:      #1a1208;
-        --color-led-on:       #ffaa00;
+        --color-led-off:      #0e1a0a;
+        --color-led-on:       #4a7a3a;
         --color-display-bg:   #080604;
         --color-display-num:  #ffaa00;
         --color-switch-thumb: #d8ceb0;
@@ -80,8 +80,8 @@
             --color-text:         #c8be9e;
             --color-text-dim:     #7a7260;
             --color-needle:       #e03800;
-            --color-led-off:      #120c04;
-            --color-led-on:       #ff9900;
+            --color-led-off:      #080e06;
+            --color-led-on:       #3d6630;
             --color-display-bg:   #060402;
             --color-display-num:  #ff9900;
             --color-switch-thumb: #a09080;
@@ -775,31 +775,26 @@
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
         animation: none !important;
     }
-    
     body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::after,
     body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::after {
         background: transparent !important;
     }
-
     body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
     body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
         background: var(--color-led-off) !important;
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
         animation: none !important;
     }
-
     body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::after,
     body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::after {
         background: transparent !important;
     }
-
     body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
     body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
         background: var(--color-led-off) !important;
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
         animation: none !important;
     }
-
     body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::after,
     body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::after {
         background: transparent !important;
