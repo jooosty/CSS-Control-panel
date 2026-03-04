@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRAFTWERK — Control Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- :target anchors for plant state — only permitted use of id in CSS -->
+    <div id="running"></div>
+    <div id="stopped"></div>
+
+    <!-- Switch checkboxes — id used only for label linking (permitted) -->
+    <input type="checkbox" id="sw-1" checked>
+    <input type="checkbox" id="sw-2">
+    <input type="checkbox" id="sw-3" checked>
+
+    <header>
+        <h1>KRAFT<span>WERK</span></h1>
+        <p>Power Station Control Panel</p>
+    </header>
+
+    <main aria-label="Control Panel">
+
+        <!-- GAUGES -->
+        <section aria-label="Instrument gauges">
+            <figure>
+                <div aria-hidden="true">
+                    <span>Hz</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>48</i><i>50</i><i>52</i></span>
+                </div>
+                <figcaption>Frequency</figcaption>
+            </figure>
+            <figure>
+                <div aria-hidden="true">
+                    <span>bar</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>100</i><i>200</i></span>
+                </div>
+                <figcaption>Pressure</figcaption>
+            </figure>
+            <figure>
+                <div aria-hidden="true">
+                    <span>°C</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>300</i><i>600</i></span>
+                </div>
+                <figcaption>Temperature</figcaption>
+            </figure>
+            <figure>
+                <div aria-hidden="true">
+                    <span>MW</span>
+                    <span></span>
+                    <span></span>
+                    <span><i>0</i><i>500</i><i>1000</i></span>
+                </div>
+                <figcaption>Power</figcaption>
+            </figure>
+        </section>
+
+        <!-- INDICATORS -->
+        <section aria-label="Status indicators">
+            <input type="checkbox" id="led-1" checked aria-label="Indicator 1">
+            <label for="led-1"></label>
+
+            <input type="checkbox" id="led-2" checked aria-label="Indicator 2">
+            <label for="led-2"></label>
+
+            <input type="checkbox" id="led-3" aria-label="Indicator 3">
+            <label for="led-3"></label>
+
+            <input type="checkbox" id="led-4" checked aria-label="Indicator 4">
+            <label for="led-4"></label>
+
+            <input type="checkbox" id="led-5" checked aria-label="Indicator 5">
+            <label for="led-5"></label>
+
+            <input type="checkbox" id="led-6" aria-label="Indicator 6">
+            <label for="led-6"></label>
+        </section>
+
+        <!-- TOGGLE SWITCHES — labels link to checkboxes outside main -->
+        <section aria-label="System switches">
+            <label for="sw-1">Pump A</label>
+            <label for="sw-2">Pump B</label>
+            <label for="sw-3">Turbine</label>
+        </section>
+
+        <!-- ROTARY KNOBS -->
+        <section aria-label="Control knobs">
+            <div>
+                <span aria-hidden="true"></span>
+                <input type="range" id="knob-freq" name="knob-freq" min="-145" max="145" value="0" aria-label="Frequency control">
+            </div>
+            <label for="knob-freq">Frequency</label>
+
+            <div>
+                <span aria-hidden="true"></span>
+                <input type="range" id="knob-pressure" name="knob-pressure" min="-145" max="145" value="-40" aria-label="Pressure control">
+            </div>
+            <label for="knob-pressure">Pressure</label>
+
+            <div>
+                <span aria-hidden="true"></span>
+                <input type="range" id="knob-temp" name="knob-temp" min="-145" max="145" value="20" aria-label="Temperature control">
+            </div>
+            <label for="knob-temp">Temp</label>
+
+            <div>
+                <span aria-hidden="true"></span>
+                <input type="range" id="knob-power" name="knob-power" min="-145" max="145" value="80" aria-label="Power control">
+            </div>
+            <label for="knob-power">Power</label>
+        </section>
+
+        <!-- BUTTONS — anchor links toggle :target state -->
+        <section aria-label="Plant controls">
+            <a href="#stopped">STOP</a>
+            <a href="#running">START</a>
+        </section>
+
+        <!-- DISPLAY -->
+        <section aria-label="Power output display">
+            <figure>
+                <span>847</span>
+                <span>MW</span>
+            </figure>
+        </section>
+
+    </main>
+
+    <script>
+        // ONDERSTAANDE CODE MAG JE GEBRUIKEN
+        // NIETS AANPASSEN
+
+        const ranges = document.querySelectorAll('[type="range"]');
+
+        const updateRange = range => {
+            const rangeName = range.name;
+            const rangeValue = range.value;
+            document.documentElement.style.setProperty("--" + rangeName, rangeValue);
+        }
+
+        ranges.forEach(range => {
+            updateRange(range);
+            range.oninput = () => {
+                updateRange(range)
+            };
+        });
+    </script>
+
+</body>
+</html>
