@@ -1,7 +1,7 @@
 /* ── GAUGE ───────────────────────────────────────────────────── */
 
 main > section:first-of-type > figure {
-    width: 8rem;
+    width: 12rem;
     background: #c6c2b8;
     border: 1px solid #9a9690;
     border-radius: 2px;
@@ -253,7 +253,7 @@ main > section:nth-of-type(4) > div {
     height: 3rem;
 }
 
-/* Knob face */
+/* Knob face — pressure (first) */
 main > section:nth-of-type(4) > div > span {
     display: block;
     width: 3rem;
@@ -414,4 +414,111 @@ main > section:nth-of-type(6) > figure > span:last-child {
     91%            { opacity: 0.7; }
     95%            { opacity: 1; }
     97%            { opacity: 0.85; }
+}
+
+/* ── BODY & PAGE ─────────────────────────────────────────────── */
+
+body {
+    background: #1c1c18;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    font-family: monospace;
+}
+
+
+/* ── MAIN PANEL SHELL ────────────────────────────────────────── */
+
+main {
+    background: #d4d0c6;
+    border: 2px solid #9a9690;
+    border-radius: 3px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 40rem;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* ── SECTION 1: GAUGES ───────────────────────────────────────── */
+
+main > section:first-of-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+/* ── SECTION 2: INDICATORS ───────────────────────────────────── */
+
+main > section:nth-of-type(2) {
+    background: #bfbcb3;
+    border: 1px solid #9a9690;
+    border-radius: 2px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* ── SECTION 3: TOGGLE SWITCHES ─────────────────────────────── */
+
+main > section:nth-of-type(3) {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 0.5rem 0.75rem;
+    background: #cac6bc;
+    border: 1px solid #9a9690;
+    border-radius: 2px;
+}
+
+/* ── SECTION 4: ROTARY KNOBS ─────────────────────────────────── */
+
+main > section:nth-of-type(4) {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 0.75rem;
+    background: #cac6bc;
+    border: 1px solid #9a9690;
+    border-radius: 2px;
+}
+
+main > section:nth-of-type(4) > label {
+    font-size: 0.4rem;
+    letter-spacing: 0.12em;
+    color: #4a4840;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+}
+
+/* ── SECTION 5: BUTTONS ──────────────────────────────────────── */
+
+main > section:nth-of-type(5) {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: #cac6bc;
+    border: 1px solid #9a9690;
+    border-radius: 2px;
+}
+
+/* ── SECTION 6: DISPLAY ──────────────────────────────────────── */
+
+main > section:nth-of-type(6) {
+    display: flex;
+    justify-content: center;
+    background: #111;
+    border: 2px solid #222;
+    border-radius: 2px;
+    padding: 0.5rem;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
 }
