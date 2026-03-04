@@ -1,570 +1,772 @@
-/* MARK: GAUGE */
+/* ============================================================
+   KRAFTWERK — Control Panel
+   ──────────────────────────────────────────────────────────
+   Architecture : @layer, CSS nesting, @container queries
+   Themes       : light (default) + dark (prefers-color-scheme)
+   Fonts        : Orbitron (title), Share Tech Mono (UI)
+   JS           : range script only (permitted)
+   ============================================================ */
 
-main > section:first-of-type > figure {
-    width: 12rem;
-    background: #c6c2b8;
-    border: 1px solid #9a9690;
-    border-radius: 2px;
-    padding: 0.4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
+/* MARK: LAYERS */
+
+@layer reset, tokens, base, layout, components, state;
+
+/* MARK: RESET */
+
+@layer reset {
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 }
 
-/* Gauge face */
-main > section:first-of-type > figure > div {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    background: #f8f4ec;
-    border: 1px solid #ccc9c0;
-    border-radius: 2px 2px 0 0;
-    position: relative;
-    overflow: hidden;
+/* MARK: TOKENS */
+
+@layer tokens {
+
+    :root {
+        /* Knob custom properties — set by JS */
+        --knob-freq: 0;
+        --knob-pressure: 0;
+        --knob-temp: 0;
+        --knob-power: 0;
+
+        /* Light theme */
+        --color-bg:           #1c1c18;
+        --color-panel:        #d4d0c6;
+        --color-panel-border: #9a9690;
+        --color-section:      #cac6bc;
+        --color-section-dim:  #bfbcb3;
+        --color-gauge-bg:     #c6c2b8;
+        --color-gauge-face:   #f8f4ec;
+        --color-text:         #4a4840;
+        --color-text-dim:     #6a6860;
+        --color-needle:       #cc2200;
+        --color-led-off:      #0a2a12;
+        --color-led-on:       #00dd55;
+        --color-display-bg:   #0a0a08;
+        --color-display-num:  #ff2200;
+        --color-switch-thumb: #e0ddd5;
+        --color-switch-track: #8a8a80;
+        --color-switch-dark:  #5a5a50;
+
+        /* Typography */
+        --font-display: 'Orbitron', monospace;
+        --font-mono:    'Share Tech Mono', monospace;
+
+        /* Spacing */
+        --gap-sm:   0.4rem;
+        --gap-md:   0.75rem;
+        --gap-lg:   1.5rem;
+        --pad-sm:   0.5rem 0.75rem;
+        --pad-md:   0.75rem;
+        --radius:   2px;
+    }
+
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --color-bg:           #0e0e0c;
+            --color-panel:        #1e1e1a;
+            --color-panel-border: #3a3a34;
+            --color-section:      #242420;
+            --color-section-dim:  #1a1a16;
+            --color-gauge-bg:     #2a2a26;
+            --color-gauge-face:   #1e1e1a;
+            --color-text:         #aaa89e;
+            --color-text-dim:     #6a6860;
+            --color-needle:       #ff3300;
+            --color-led-off:      #081808;
+            --color-led-on:       #00ff66;
+            --color-display-bg:   #040402;
+            --color-display-num:  #ff3300;
+            --color-switch-thumb: #3a3a36;
+            --color-switch-track: #4a4a46;
+            --color-switch-dark:  #2a2a26;
+        }
+    }
 }
 
-/* Scale tick marks */
-main > section:first-of-type > figure > div::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent calc(10% - 0.5px),
-      rgba(0, 0, 0, 0.1) calc(10% - 0.5px),
-      rgba(0, 0, 0, 0.1) 10%
-    );
+/* MARK: BASE */
+
+@layer base {
+
+    body {
+        background: var(--color-bg);
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+        font-family: var(--font-mono);
+        color: var(--color-text);
+    }
+
+    /* Hidden state checkboxes */
+    [id="plant-state"],
+    [id="sw-1"],
+    [id="sw-2"],
+    [id="sw-3"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 }
 
-/* Unit label */
-main > section:first-of-type > figure > div > span:first-child {
-    position: absolute;
-    top: 0.25rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: monospace;
-    font-size: 0.45rem;
-    color: #6a6860;
-    white-space: nowrap;
+/* MARK: TYPOGRAPHY */
+
+@layer base {
+
+    header {
+        text-align: center;
+        margin-bottom: var(--gap-lg);
+
+        & h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: var(--color-text-dim);
+            text-transform: uppercase;
+
+            & span {
+                color: var(--color-needle);
+                text-shadow: 0 0 20px rgba(204, 34, 0, 0.5);
+            }
+        }
+
+        & p {
+            font-family: var(--font-mono);
+            font-size: clamp(0.4rem, 1.5vw, 0.6rem);
+            letter-spacing: 0.3em;
+            color: var(--color-text-dim);
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+    }
 }
 
-/* Arc */
-main > section:first-of-type > figure > div > span:nth-child(2) {
-    position: absolute;
-    bottom: 0.3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 72%;
-    height: 38%;
-    border: 1.5px solid rgba(0, 0, 0, 0.18);
-    border-bottom: none;
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+/* MARK: LAYOUT */
+
+@layer layout {
+
+    main {
+        background: var(--color-panel);
+        border: 2px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--gap-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-lg);
+        width: 100%;
+        max-width: 44rem;
+        container-type: inline-size;
+        container-name: panel;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Gauges — 2x2 grid */
+    main > section:first-of-type {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--gap-sm);
+    }
+
+    /* Indicators strip */
+    main > section:nth-of-type(2) {
+        background: var(--color-section-dim);
+        border: 1px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap-sm);
+        align-items: center;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Switches row */
+    main > section:nth-of-type(3) {
+        background: var(--color-section);
+        border: 1px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        gap: var(--gap-lg);
+        align-items: flex-start;
+    }
+
+    /* Knobs row */
+    main > section:nth-of-type(4) {
+        background: var(--color-section);
+        border: 1px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--pad-md);
+        display: flex;
+        gap: var(--gap-lg);
+        align-items: center;
+        flex-wrap: wrap;
+
+        & > div {
+            position: relative;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        & > label {
+            font-size: 0.4rem;
+            letter-spacing: 0.12em;
+            color: var(--color-text-dim);
+            text-transform: uppercase;
+        }
+    }
+
+    /* Buttons row */
+    main > section:nth-of-type(5) {
+        background: var(--color-section);
+        border: 1px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        gap: var(--gap-md);
+        align-items: center;
+    }
+
+    /* Display */
+    main > section:nth-of-type(6) {
+        background: #111;
+        border: 2px solid #222;
+        border-radius: var(--radius);
+        padding: 0.5rem;
+        display: flex;
+        justify-content: center;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
 }
 
-/* Needle */
-main > section:first-of-type > figure > div > span:nth-child(3) {
-    position: absolute;
-    bottom: 0.25rem;
-    left: 50%;
-    transform-origin: bottom center;
-    transform: translateX(-50%) rotate(-50deg);
-    width: 1.5px;
-    height: 36%;
-    background: linear-gradient(to top, #882200, #cc2200);
-    box-shadow: 0 0 1px rgba(204, 34, 0, 0.8);
-    border-radius: 1px 1px 0 0;
-    transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+/* MARK: COMPONENTS */
+
+@layer components {
+
+    /* MARK: GAUGE */
+
+    main > section:first-of-type > figure {
+        width: 100%;
+        background: var(--color-gauge-bg);
+        border: 1px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: 0.4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+
+        /* Gauge face */
+        & > div {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            background: var(--color-gauge-face);
+            border: 1px solid var(--color-panel-border);
+            border-radius: 2px 2px 0 0;
+            position: relative;
+            overflow: hidden;
+
+            /* Scale tick marks */
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: repeating-linear-gradient(
+                    90deg,
+                    transparent 0,
+                    transparent calc(10% - 0.5px),
+                    rgba(0, 0, 0, 0.1) calc(10% - 0.5px),
+                    rgba(0, 0, 0, 0.1) 10%
+                );
+            }
+
+            /* Unit label */
+            & > span:first-child {
+                position: absolute;
+                top: 0.25rem;
+                left: 50%;
+                transform: translateX(-50%);
+                font-family: var(--font-mono);
+                font-size: 0.45rem;
+                color: var(--color-text-dim);
+                white-space: nowrap;
+            }
+
+            /* Arc */
+            & > span:nth-child(2) {
+                position: absolute;
+                bottom: 0.3rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 72%;
+                height: 38%;
+                border: 1.5px solid rgba(0, 0, 0, 0.18);
+                border-bottom: none;
+                border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            }
+
+            /* Needle */
+            & > span:nth-child(3) {
+                position: absolute;
+                bottom: 0.25rem;
+                left: 50%;
+                transform-origin: bottom center;
+                transform: translateX(-50%) rotate(-65deg);
+                width: 1.5px;
+                height: 36%;
+                background: linear-gradient(to top, #882200, var(--color-needle));
+                box-shadow: 0 0 1px rgba(204, 34, 0, 0.8);
+                border-radius: 1px 1px 0 0;
+                transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+
+                /* Pivot dot */
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 5px;
+                    height: 5px;
+                    background: #1a1a18;
+                    border-radius: 50%;
+                }
+            }
+
+            /* Scale numbers */
+            & > span:last-child {
+                position: absolute;
+                bottom: 0.1rem;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 0.2rem;
+                font-family: var(--font-mono);
+                font-size: 0.3rem;
+                color: var(--color-text-dim);
+            }
+        }
+
+        /* Caption */
+        & > figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.35rem;
+            color: var(--color-text-dim);
+            text-align: center;
+        }
+    }
+
+    /* MARK: INDICATOR */
+
+    main > section:nth-of-type(2) > input[type="checkbox"] {
+        appearance: none;
+        position: relative;
+        margin: 0;
+        width: 2.2rem;
+        height: 1.2rem;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            background: var(--color-led-off);
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.4),
+                0 1px rgba(255, 255, 255, 0.05);
+            transition: background 150ms, box-shadow 150ms;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0.15rem;
+            border-radius: 1px;
+            background: rgba(0, 221, 85, 0.08);
+            transition: background 150ms;
+        }
+
+        &:checked::before {
+            background: var(--color-led-on);
+            box-shadow:
+                0 0 8px rgba(0, 221, 85, 0.55),
+                0 0 16px rgba(0, 221, 85, 0.25);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        &:checked::after {
+            background: rgba(255, 255, 255, 0.12);
+        }
+    }
+
+    main > section:nth-of-type(2) > input[type="checkbox"] + label {
+        display: none;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.65; }
+    }
+
+    /* MARK: TOGGLE SWITCH */
+
+    main > section:nth-of-type(3) > label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.9rem;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.35rem;
+        letter-spacing: 0.1em;
+        color: var(--color-text);
+        text-transform: uppercase;
+
+        /* Housing — default OFF (thumb down) */
+        &::before {
+            content: '';
+            display: block;
+            order: -1;
+            width: 0.9rem;
+            height: 2.2rem;
+            background:
+                linear-gradient(to bottom, transparent 0, transparent 1.35rem, var(--color-switch-thumb) 1.35rem),
+                linear-gradient(to bottom, var(--color-switch-track), var(--color-switch-dark));
+            border-radius: var(--radius);
+            border: 1px solid #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+            transition: background 150ms;
+        }
+
+        /* State text — OFF */
+        &::after {
+            content: 'OFF';
+            font-size: 0.3rem;
+            color: var(--color-text-dim);
+        }
+    }
+
+    /* MARK: ROTARY KNOB */
+
+    main > section:nth-of-type(4) > div > span {
+        display: block;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
+            radial-gradient(circle at 50% 50%, #2e2e2a 0, #1b1b18 62%, #0f0f0d 100%);
+        border: 2px solid #0a0a08;
+        position: relative;
+        pointer-events: none;
+        transform: rotate(calc(var(--knob-freq) * 1deg));
+        transition: transform 120ms linear;
+        box-shadow:
+            inset 0 1px 2px rgba(255, 255, 255, 0.18),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.55),
+            0 2px 5px rgba(0, 0, 0, 0.4);
+
+        /* Tick mark */
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 0.7rem;
+            background: #ccccbb;
+            border-radius: 1px;
+            box-shadow: 0 0 2px rgba(255, 245, 190, 0.45);
+        }
+
+        /* Center cap */
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #5f5f57, #1a1a17);
+            border: 1px solid rgba(0, 0, 0, 0.55);
+        }
+    }
+
+    /* Per-knob rotation */
+    main > section:nth-of-type(4) > div:nth-of-type(2) > span {
+        transform: rotate(calc(var(--knob-pressure) * 1deg));
+    }
+    main > section:nth-of-type(4) > div:nth-of-type(3) > span {
+        transform: rotate(calc(var(--knob-temp) * 1deg));
+    }
+    main > section:nth-of-type(4) > div:nth-of-type(4) > span {
+        transform: rotate(calc(var(--knob-power) * 1deg));
+    }
+
+    /* Invisible range on top */
+    main > section:nth-of-type(4) > div > input[type="range"] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    /* MARK: BUTTONS */
+
+    main > section:nth-of-type(5) > label {
+        font-family: var(--font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.15em;
+        width: 3.5rem;
+        height: 1.6rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 80ms, box-shadow 80ms;
+        user-select: none;
+
+        &:active {
+            transform: translateY(2px);
+        }
+
+        /* STOP */
+        &:first-of-type {
+            background: linear-gradient(to bottom, #dd1500, #aa1100);
+            color: #ffbbbb;
+            box-shadow:
+                0 3px 0 #660a00,
+                0 5px 10px rgba(0, 0, 0, 0.4),
+                inset 0 1px rgba(255, 130, 130, 0.25);
+
+            &:active {
+                box-shadow:
+                    0 1px 0 #660a00,
+                    0 2px 4px rgba(0, 0, 0, 0.4),
+                    inset 0 1px rgba(255, 130, 130, 0.25);
+            }
+        }
+
+        /* START */
+        &:last-of-type {
+            background: linear-gradient(to bottom, #007700, #005500);
+            color: #aaffaa;
+            box-shadow:
+                0 3px 0 #002200,
+                0 5px 10px rgba(0, 0, 0, 0.4),
+                inset 0 1px rgba(130, 255, 130, 0.15);
+
+            &:active {
+                box-shadow:
+                    0 1px 0 #002200,
+                    0 2px 4px rgba(0, 0, 0, 0.4),
+                    inset 0 1px rgba(130, 255, 130, 0.15);
+            }
+        }
+    }
+
+    /* MARK: DISPLAY */
+
+    main > section:nth-of-type(6) > figure {
+        background: var(--color-display-bg);
+        border: 1px solid #222;
+        border-radius: var(--radius);
+        padding: 0.6rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+        width: 8rem;
+
+        & > span:first-child {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            color: var(--color-display-num);
+            letter-spacing: 0.2em;
+            text-shadow:
+                0 0 10px rgba(255, 34, 0, 0.45),
+                0 0 25px rgba(255, 34, 0, 0.25);
+            animation: flicker 5s infinite;
+        }
+
+        & > span:last-child {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            color: #444;
+            letter-spacing: 0.2em;
+        }
+    }
+
+    @keyframes flicker {
+        0%, 90%, 100% { opacity: 1; }
+        91%            { opacity: 0.7; }
+        95%            { opacity: 1; }
+        97%            { opacity: 0.85; }
+    }
 }
 
-/* Needle center pivot dot */
-main > section:first-of-type > figure > div > span:nth-child(3)::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    background: #1a1a18;
-    border-radius: 50%;
-}
-
-/* Scale numbers */
-main > section:first-of-type > figure > div > span:last-child {
-    position: absolute;
-    bottom: 0.1rem;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 0.2rem;
-    font-family: monospace;
-    font-size: 0.3rem;
-    color: #6a6860;
-}
-
-/* Caption */
-main > section:first-of-type > figure > figcaption {
-    font-family: monospace;
-    font-size: 0.35rem;
-    color: #6a6860;
-    text-align: center;
-}
-
-/* MARK: INDICATOR */
-
-/* Styled checkbox */
-main > section:nth-of-type(2) > input[type="checkbox"] {
-    appearance: none;
-    position: relative;
-    margin: 0;
-    width: 2.2rem;
-    height: 1.2rem;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-}
-
-/* LED light */
-main > section:nth-of-type(2) > input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    background: #0a2a12;
-    box-shadow:
-        inset 0 1px 3px rgba(0, 0, 0, 0.4),
-        0 1px rgba(255, 255, 255, 0.1);
-    transition: background 150ms, box-shadow 150ms;
-}
-
-/* LED core */
-main > section:nth-of-type(2) > input[type="checkbox"]::after {
-    content: '';
-    position: absolute;
-    inset: 0.15rem;
-    border-radius: 1px;
-    background: rgba(0, 221, 85, 0.08);
-    transition: background 150ms;
-}
-
-/* LED on */
-main > section:nth-of-type(2) > input[type="checkbox"]:checked::before {
-    background: #00dd55;
-    box-shadow:
-        0 0 8px rgba(0, 221, 85, 0.55),
-        0 0 16px rgba(0, 221, 85, 0.25);
-    animation: pulse 2.5s ease-in-out infinite;
-}
-
-main > section:nth-of-type(2) > input[type="checkbox"]:checked::after {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-/* Keep label only as semantic click target */
-main > section:nth-of-type(2) > input[type="checkbox"] + label {
-    display: none;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.65; }
-}
-
-/* MARK: TOGGLE SWITCH */
-
-/* Styled checkbox */
-main > section:nth-of-type(3) > input[type="checkbox"] {
-    appearance: none;
-    position: relative;
-    margin: 0;
-    width: 0.9rem;
-    height: 2.2rem;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-}
-
-/* Switch housing */
-main > section:nth-of-type(3) > input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    width: 0.9rem;
-    height: 2.2rem;
-    background:
-        linear-gradient(to bottom, #e0ddd5 0, #e0ddd5 0.8rem, transparent 0.8rem),
-        linear-gradient(to bottom, #8a8a80, #5a5a50);
-    border-radius: 2px;
-    border: 1px solid #333;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-    transition: background 150ms;
-}
-
-/* State text — off state */
-main > section:nth-of-type(3) > input[type="checkbox"]::after {
-    content: 'OFF';
-    position: absolute;
-    top: calc(100% + 0.25rem);
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: monospace;
-    font-size: 0.35rem;
-    letter-spacing: 0.1em;
-    color: #6a6860;
-}
-
-/* Switch DOWN — on state */
-main > section:nth-of-type(3) > input[type="checkbox"]:checked::before {
-    background:
-        linear-gradient(to bottom, transparent 0, transparent 1.35rem, #e0ddd5 1.35rem),
-        linear-gradient(to bottom, #8a8a80, #5a5a50);
-}
-
-/* State text — on state */
-main > section:nth-of-type(3) > input[type="checkbox"]:checked::after {
-    content: 'ON';
-    color: #00dd55;
-}
-
-/* Keep component caption style */
-main > section:nth-of-type(3) > input[type="checkbox"] + label {
-    margin-top: 0.6rem;
-    font-family: monospace;
-    font-size: 0.35rem;
-    color: #6a6860;
-    cursor: pointer;
-}
-
-/* MARK: ROTARY KNOB */
-
-:root {
-    --knob-freq: 0;
-    --knob-pressure: 0;
-    --knob-temp: 0;
-    --knob-power: 0;
-}
-
-/* Knob wrapper */
-main > section:nth-of-type(4) > div {
-    position: relative;
-    width: 3rem;
-    height: 3rem;
-}
-
-/* Knob face — pressure (first) */
-main > section:nth-of-type(4) > div > span {
-    display: block;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 45%),
-        radial-gradient(circle at 50% 50%, #2e2e2a 0, #1b1b18 62%, #0f0f0d 100%);
-    border: 2px solid #0a0a08;
-    position: relative;
-    pointer-events: none;
-    transform: rotate(calc(var(--knob-freq) * 1deg));
-    transition: transform 120ms linear;
-    box-shadow:
-        inset 0 1px 2px rgba(255, 255, 255, 0.18),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.55),
-        0 2px 5px rgba(0, 0, 0, 0.4);
-}
-
-/* Pressure knob */
-main > section:nth-of-type(4) > div:nth-of-type(2) > span {
-    transform: rotate(calc(var(--knob-pressure) * 1deg));
-}
-
-/* Temp knob */
-main > section:nth-of-type(4) > div:nth-of-type(3) > span {
-    transform: rotate(calc(var(--knob-temp) * 1deg));
-}
-
-/* Power knob */
-main > section:nth-of-type(4) > div:nth-of-type(4) > span {
-    transform: rotate(calc(var(--knob-power) * 1deg));
-}
-
-/* Tick mark */
-main > section:nth-of-type(4) > div > span::before {
-    content: '';
-    position: absolute;
-    top: 0.2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 0.7rem;
-    background: #ccccbb;
-    border-radius: 1px;
-    box-shadow: 0 0 2px rgba(255, 245, 190, 0.45);
-}
-
-/* Center cap */
-main > section:nth-of-type(4) > div > span::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0.85rem;
-    height: 0.85rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #5f5f57, #1a1a17);
-    border: 1px solid rgba(0, 0, 0, 0.55);
-}
-
-/* Range sits invisibly on top — captures interaction */
-main > section:nth-of-type(4) > div > input[type="range"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    opacity: 0;
-}
-
-/* MARK: BUTTONS */
-
-/* Hide the state checkbox */
-body > input[type="checkbox"]#plant-state {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-main > section:nth-of-type(5) > label {
-    font-family: monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-    width: 3.5rem;
-    height: 1.6rem;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 80ms, box-shadow 80ms;
-    user-select: none;
-}
-
-main > section:nth-of-type(5) > label:active {
-    transform: translateY(2px);
-}
-
-/* STOP — first label, always red */
-main > section:nth-of-type(5) > label:first-of-type {
-    background: linear-gradient(to bottom, #dd1500, #aa1100);
-    color: #ffbbbb;
-    box-shadow:
-        0 3px 0 #660a00,
-        0 5px 10px rgba(0, 0, 0, 0.4),
-        inset 0 1px rgba(255, 130, 130, 0.25);
-}
-
-main > section:nth-of-type(5) > label:first-of-type:active {
-    box-shadow:
-        0 1px 0 #660a00,
-        0 2px 4px rgba(0, 0, 0, 0.4),
-        inset 0 1px rgba(255, 130, 130, 0.25);
-}
-
-/* START — last label, always green */
-main > section:nth-of-type(5) > label:last-of-type {
-    background: linear-gradient(to bottom, #007700, #005500);
-    color: #aaffaa;
-    box-shadow:
-        0 3px 0 #002200,
-        0 5px 10px rgba(0, 0, 0, 0.4),
-        inset 0 1px rgba(130, 255, 130, 0.15);
-}
-
-main > section:nth-of-type(5) > label:last-of-type:active {
-    box-shadow:
-        0 1px 0 #002200,
-        0 2px 4px rgba(0, 0, 0, 0.4),
-        inset 0 1px rgba(130, 255, 130, 0.15);
-}
-
-/* MARK: DISPLAY */
-
-main > section:nth-of-type(6) > figure {
-    background: #0a0a08;
-    border: 1px solid #222;
-    border-radius: 2px;
-    padding: 0.6rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
-    width: 6rem;
-}
-
-/* Readout number */
-main > section:nth-of-type(6) > figure > span:first-child {
-    font-family: monospace;
-    font-size: 2rem;
-    color: #ff2200;
-    letter-spacing: 0.2em;
-    text-shadow:
-        0 0 10px rgba(255, 34, 0, 0.45),
-        0 0 25px rgba(255, 34, 0, 0.25);
-    animation: flicker 5s infinite;
-}
-
-/* Unit label */
-main > section:nth-of-type(6) > figure > span:last-child {
-    font-family: monospace;
-    font-size: 0.5rem;
-    color: #444;
-    letter-spacing: 0.2em;
-}
-
-@keyframes flicker {
-    0%, 90%, 100% { opacity: 1; }
-    91%            { opacity: 0.7; }
-    95%            { opacity: 1; }
-    97%            { opacity: 0.85; }
-}
-
-/* MARK: BODY & PAGE */
-
-body {
-    background: #1c1c18;
-    min-height: 100dvh;
-    display: grid;
-    place-items: center;
-    font-family: monospace;
-}
-
-
-/* MARK: MAIN PANEL SHELL */
-
-main {
-    background: #d4d0c6;
-    border: 2px solid #9a9690;
-    border-radius: 3px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 40rem;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
-}
-
-/* MARK: SECTION 1: GAUGES */
-
-main > section:first-of-type {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-}
-
-/* MARK: SECTION 2: INDICATORS */
-
-main > section:nth-of-type(2) {
-    background: #bfbcb3;
-    border: 1px solid #9a9690;
-    border-radius: 2px;
-    padding: 0.5rem 0.75rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    align-items: center;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-/* MARK: SECTION 3: TOGGLE SWITCHES */
-
-main > section:nth-of-type(3) {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    padding: 0.5rem 0.75rem;
-    background: #cac6bc;
-    border: 1px solid #9a9690;
-    border-radius: 2px;
-}
-
-/* MARK: SECTION 4: ROTARY KNOBS */
-
-main > section:nth-of-type(4) {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    padding: 0.75rem;
-    background: #cac6bc;
-    border: 1px solid #9a9690;
-    border-radius: 2px;
-}
-
-main > section:nth-of-type(4) > label {
-    font-size: 0.4rem;
-    letter-spacing: 0.12em;
-    color: #4a4840;
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-}
-
-/* MARK: SECTION 5: BUTTONS */
-
-main > section:nth-of-type(5) {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    background: #cac6bc;
-    border: 1px solid #9a9690;
-    border-radius: 2px;
-}
-
-/* MARK: SECTION 6: DISPLAY */
-
-main > section:nth-of-type(6) {
-    display: flex;
-    justify-content: center;
-    background: #111;
-    border: 2px solid #222;
-    border-radius: 2px;
-    padding: 0.5rem;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-/* MARK: GAUGE NEEDLE → KNOB BINDING */
-
-/* Frequency gauge (1st figure) driven by knob-freq */
-main > section:first-of-type > figure:first-of-type > div > span:nth-child(3) {
-    transform: translateX(-50%) rotate(calc(var(--knob-freq) * 0.48deg));
-}
-
-/* Pressure gauge (2nd figure) driven by knob-pressure */
-main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
-    transform: translateX(-50%) rotate(calc(var(--knob-pressure) * 0.48deg));
-}
-
-/* Temperature gauge (3rd figure) driven by knob-temp */
-main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
-    transform: translateX(-50%) rotate(calc(var(--knob-temp) * 0.48deg));
-}
-
-/* Power gauge (4th figure) driven by knob-power */
-main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
-    transform: translateX(-50%) rotate(calc(var(--knob-power) * 0.48deg));
-}
-
-/* MARK: STOP/START STATE */
-
-body > input#plant-state:not(:checked) ~ main > section:first-of-type > figure > div > span:nth-child(3) {
-    transform: translateX(-50%) rotate(-80deg);
-    transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+/* MARK: STATE */
+
+@layer state {
+
+    /* MARK: GAUGE NEEDLE → KNOB BINDING */
+
+    main > section:first-of-type > figure:first-of-type > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-freq) * 0.48deg));
+    }
+    main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-pressure) * 0.48deg));
+    }
+    main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-temp) * 0.48deg));
+    }
+    main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-power) * 0.48deg));
+    }
+
+    /* MARK: STOP/START */
+
+    [id="plant-state"]:not(:checked) ~ main > section:first-of-type > figure > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+        transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    /* MARK: SWITCH ON STATES */
+
+    [id="sw-1"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(1) {
+        &::before {
+            background:
+                linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
+                linear-gradient(to bottom, var(--color-switch-track), var(--color-switch-dark));
+        }
+        &::after { content: 'ON'; color: var(--color-led-on); }
+    }
+
+    [id="sw-2"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(2) {
+        &::before {
+            background:
+                linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
+                linear-gradient(to bottom, var(--color-switch-track), var(--color-switch-dark));
+        }
+        &::after { content: 'ON'; color: var(--color-led-on); }
+    }
+
+    [id="sw-3"]:checked ~ main > section:nth-of-type(3) > label:nth-of-type(3) {
+        &::before {
+            background:
+                linear-gradient(to bottom, var(--color-switch-thumb) 0, var(--color-switch-thumb) 0.8rem, transparent 0.8rem),
+                linear-gradient(to bottom, var(--color-switch-track), var(--color-switch-dark));
+        }
+        &::after { content: 'ON'; color: var(--color-led-on); }
+    }
+
+    /* MARK: LED CONTROL BY SWITCHES */
+
+    /* Pump A → LEDs 1+2 */
+    [id="sw-1"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
+    [id="sw-1"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
+        background: var(--color-led-on);
+        box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
+        animation: pulse 2.5s ease-in-out infinite;
+    }
+    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
+    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
+        background: var(--color-led-off);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+        animation: none;
+    }
+
+    /* Pump B → LEDs 3+4 */
+    [id="sw-2"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
+    [id="sw-2"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
+        background: var(--color-led-on);
+        box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
+        animation: pulse 2.5s ease-in-out infinite;
+    }
+    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
+    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
+        background: var(--color-led-off);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+        animation: none;
+    }
+
+    /* Turbine → LEDs 5+6 */
+    [id="sw-3"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
+    [id="sw-3"]:checked ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
+        background: var(--color-led-on);
+        box-shadow: 0 0 8px rgba(0, 221, 85, 0.55), 0 0 16px rgba(0, 221, 85, 0.25);
+        animation: pulse 2.5s ease-in-out infinite;
+    }
+    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
+    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
+        background: var(--color-led-off);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+        animation: none;
+    }
+
+    /* MARK: KNOB DISABLE BY SWITCHES */
+
+    [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(2) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(3) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(1),
+    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(4) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    /* MARK: GAUGE DROP BY SWITCHES */
+
+    [id="sw-1"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+    [id="sw-2"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+    [id="sw-3"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3),
+    [id="sw-3"]:not(:checked) ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+
+    /* MARK: WARNING — switch off while plant running */
+
+    [id="plant-state"]:checked ~ [id="sw-1"]:not(:checked) ~ main > section:nth-of-type(3),
+    [id="plant-state"]:checked ~ [id="sw-2"]:not(:checked) ~ main > section:nth-of-type(3),
+    [id="plant-state"]:checked ~ [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(3) {
+        background: #3a1a10;
+        border-color: #cc4400;
+    }
+
+    /* MARK: DISPLAY DIM — turbine off */
+
+    [id="sw-3"]:not(:checked) ~ main > section:nth-of-type(6) > figure > span:first-child {
+        opacity: 0.15;
+        animation: none;
+    }
 }
