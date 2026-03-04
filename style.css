@@ -770,3 +770,38 @@
         animation: none;
     }
 }
+
+/* MARK: RESPONSIVE */
+
+/* Container query — gauge grid responds to panel width, not viewport */
+@container panel (max-width: 28rem) {
+    main > section:first-of-type {
+        grid-template-columns: 1fr;
+    }
+
+    main > section:nth-of-type(4) {
+        gap: var(--gap-md);
+        flex-wrap: wrap;
+    }
+}
+
+/* Viewport query — overall layout at small screens */
+@media (max-width: 30rem) {
+    main {
+        padding: var(--gap-md);
+        gap: var(--gap-md);
+    }
+
+    main > section:nth-of-type(3) {
+        gap: var(--gap-md);
+    }
+
+    main > section:nth-of-type(5) > label {
+        width: 2.8rem;
+        font-size: 0.4rem;
+    }
+
+    header > h1 {
+        font-size: clamp(1.2rem, 8vw, 2rem);
+    }
+}
