@@ -1,4 +1,4 @@
-/* ── GAUGE ───────────────────────────────────────────────────── */
+/* MARK: GAUGE */
 
 main > section:first-of-type > figure {
     width: 12rem;
@@ -112,7 +112,7 @@ main > section:first-of-type > figure > figcaption {
     text-align: center;
 }
 
-/* ── INDICATOR ───────────────────────────────────────────────── */
+/* MARK: INDICATOR */
 
 /* Styled checkbox */
 main > section:nth-of-type(2) > input[type="checkbox"] {
@@ -173,7 +173,7 @@ main > section:nth-of-type(2) > input[type="checkbox"] + label {
     50%       { opacity: 0.65; }
 }
 
-/* ── TOGGLE SWITCH ───────────────────────────────────────────── */
+/* MARK: TOGGLE SWITCH */
 
 /* Styled checkbox */
 main > section:nth-of-type(3) > input[type="checkbox"] {
@@ -238,9 +238,10 @@ main > section:nth-of-type(3) > input[type="checkbox"] + label {
     cursor: pointer;
 }
 
-/* ── ROTARY KNOB ─────────────────────────────────────────────── */
+/* MARK: ROTARY KNOB */
 
 :root {
+    --knob-freq: 0;
     --knob-pressure: 0;
     --knob-temp: 0;
     --knob-power: 0;
@@ -265,7 +266,7 @@ main > section:nth-of-type(4) > div > span {
     border: 2px solid #0a0a08;
     position: relative;
     pointer-events: none;
-    transform: rotate(calc(var(--knob-pressure) * 1deg));
+    transform: rotate(calc(var(--knob-freq) * 1deg));
     transition: transform 120ms linear;
     box-shadow:
         inset 0 1px 2px rgba(255, 255, 255, 0.18),
@@ -273,13 +274,18 @@ main > section:nth-of-type(4) > div > span {
         0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Temp knob */
+/* Pressure knob */
 main > section:nth-of-type(4) > div:nth-of-type(2) > span {
+    transform: rotate(calc(var(--knob-pressure) * 1deg));
+}
+
+/* Temp knob */
+main > section:nth-of-type(4) > div:nth-of-type(3) > span {
     transform: rotate(calc(var(--knob-temp) * 1deg));
 }
 
 /* Power knob */
-main > section:nth-of-type(4) > div:nth-of-type(3) > span {
+main > section:nth-of-type(4) > div:nth-of-type(4) > span {
     transform: rotate(calc(var(--knob-power) * 1deg));
 }
 
@@ -322,7 +328,7 @@ main > section:nth-of-type(4) > div > input[type="range"] {
     opacity: 0;
 }
 
-/* ── BUTTONS ─────────────────────────────────────────────────── */
+/* MARK: BUTTONS */
 
 main > section:nth-of-type(5) > button {
     font-family: monospace;
@@ -374,7 +380,7 @@ main > section:nth-of-type(5) > button:last-of-type:active {
         inset 0 1px rgba(130, 255, 130, 0.15);
 }
 
-/* ── DISPLAY ─────────────────────────────────────────────────── */
+/* MARK: DISPLAY */
 
 main > section:nth-of-type(6) > figure {
     background: #0a0a08;
@@ -416,7 +422,7 @@ main > section:nth-of-type(6) > figure > span:last-child {
     97%            { opacity: 0.85; }
 }
 
-/* ── BODY & PAGE ─────────────────────────────────────────────── */
+/* MARK: BODY & PAGE */
 
 body {
     background: #1c1c18;
@@ -427,7 +433,7 @@ body {
 }
 
 
-/* ── MAIN PANEL SHELL ────────────────────────────────────────── */
+/* MARK: MAIN PANEL SHELL */
 
 main {
     background: #d4d0c6;
@@ -445,7 +451,7 @@ main {
         inset 0 -2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* ── SECTION 1: GAUGES ───────────────────────────────────────── */
+/* MARK: SECTION 1: GAUGES */
 
 main > section:first-of-type {
     display: grid;
@@ -453,7 +459,7 @@ main > section:first-of-type {
     gap: 0.5rem;
 }
 
-/* ── SECTION 2: INDICATORS ───────────────────────────────────── */
+/* MARK: SECTION 2: INDICATORS */
 
 main > section:nth-of-type(2) {
     background: #bfbcb3;
@@ -467,7 +473,7 @@ main > section:nth-of-type(2) {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-/* ── SECTION 3: TOGGLE SWITCHES ─────────────────────────────── */
+/* MARK: SECTION 3: TOGGLE SWITCHES */
 
 main > section:nth-of-type(3) {
     display: flex;
@@ -479,7 +485,7 @@ main > section:nth-of-type(3) {
     border-radius: 2px;
 }
 
-/* ── SECTION 4: ROTARY KNOBS ─────────────────────────────────── */
+/* MARK: SECTION 4: ROTARY KNOBS */
 
 main > section:nth-of-type(4) {
     display: flex;
@@ -499,7 +505,7 @@ main > section:nth-of-type(4) > label {
     margin-top: 0.3rem;
 }
 
-/* ── SECTION 5: BUTTONS ──────────────────────────────────────── */
+/* MARK: SECTION 5: BUTTONS */
 
 main > section:nth-of-type(5) {
     display: flex;
@@ -511,7 +517,7 @@ main > section:nth-of-type(5) {
     border-radius: 2px;
 }
 
-/* ── SECTION 6: DISPLAY ──────────────────────────────────────── */
+/* MARK: SECTION 6: DISPLAY */
 
 main > section:nth-of-type(6) {
     display: flex;
@@ -521,4 +527,25 @@ main > section:nth-of-type(6) {
     border-radius: 2px;
     padding: 0.5rem;
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+/* MARK: GAUGE NEEDLE → KNOB BINDING */
+
+/* Frequency gauge (1st figure) driven by knob-freq */
+main > section:first-of-type > figure:first-of-type > div > span:nth-child(3) {
+    transform: translateX(-50%) rotate(calc(var(--knob-freq) * 0.48deg));
+}
+
+/* Pressure gauge (2nd figure) driven by knob-pressure */
+main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+    transform: translateX(-50%) rotate(calc(var(--knob-pressure) * 0.48deg));
+}
+
+/* Temperature gauge (3rd figure) driven by knob-temp */
+main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+    transform: translateX(-50%) rotate(calc(var(--knob-temp) * 0.48deg));
+}
+
+/* Power gauge (4th figure) driven by knob-power */
+main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+    transform: translateX(-50%) rotate(calc(var(--knob-power) * 0.48deg));
 }
