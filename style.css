@@ -276,6 +276,22 @@
             position: relative;
             overflow: hidden;
 
+            /* Scanline overlay */
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.06) 2px,
+                    rgba(0, 0, 0, 0.06) 4px
+                );
+                pointer-events: none;
+                z-index: 1;
+            }
+
             /* Scale tick marks */
             &::before {
                 content: '';
@@ -847,4 +863,67 @@
             }
         }
     }
+}
+
+/* MARK: UPTIME COUNTER */
+
+/* Animate an integer custom property using @property */
+@property --uptime {
+    syntax: '<integer>';
+    inherits: false;
+    initial-value: 0;
+}
+
+@keyframes count-up {
+    from { --uptime: 0; }
+    to   { --uptime: 9999; }
+}
+
+/* Second display figure — uptime */
+main > section:nth-of-type(6) > figure:last-of-type {
+    background: var(--color-display-bg);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+
+    /* Uptime number via counter on ::before */
+    & > span:first-child {
+        animation: count-up 9999s linear forwards;
+        counter-reset: uptime var(--uptime);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-display-num);
+        letter-spacing: 0.15em;
+        text-shadow:
+            0 0 8px rgba(255, 34, 0, 0.4),
+            0 0 20px rgba(255, 34, 0, 0.2);
+
+        &::before {
+            content: counter(uptime, decimal-leading-zero);
+        }
+    }
+
+    & > span:last-child {
+        font-family: var(--font-mono);
+        font-size: 0.35rem;
+        color: #444;
+        letter-spacing: 0.2em;
+    }
+}
+
+/* Uptime pauses when plant is stopped */
+[id="plant-state"]:not(:checked) ~ main > section:nth-of-type(6) > figure:last-of-type > span:first-child {
+    animation-play-state: paused;
+    opacity: 0.15;
+}
+
+/* Layout — display section shows two figures side by side */
+main > section:nth-of-type(6) {
+    gap: 0.75rem;
+    align-items: center;
 }

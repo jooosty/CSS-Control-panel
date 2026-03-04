@@ -65,6 +65,14 @@
 - [Kraftwerk Lippendorf control room (Wikipedia)](https://en.wikipedia.org/wiki/Lippendorf_power_station)
 - [Flickr: Abandoned power station control panels](https://www.flickr.com/search/?text=abandoned+power+station+control+room)
 
+---
+
+## Timer docs
+
+- [timer](https://frontendmasters.com/blog/how-to-make-a-css-timer/)
+
+
+
 
 
 
