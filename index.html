@@ -8,6 +8,10 @@
 </head>
 <body>
 
+    <input type="checkbox" id="plant-state">
+    <input type="checkbox" id="sw-1" checked>
+    <input type="checkbox" id="sw-2">
+    <input type="checkbox" id="sw-3" checked>
     <main>
 
         <!-- GAUGES -->
@@ -73,13 +77,8 @@
 
         <!-- TOGGLE SWITCHES -->
         <section>
-            <input type="checkbox" id="sw-1" checked>
             <label for="sw-1">Pump A</label>
-
-            <input type="checkbox" id="sw-2">
             <label for="sw-2">Pump B</label>
-
-            <input type="checkbox" id="sw-3" checked>
             <label for="sw-3">Turbine</label>
         </section>
 
@@ -87,7 +86,7 @@
         <section>
             <div>
                 <span></span>
-                <input type="range" id="knob-freq" name="knob-freq" min="-145" max="145" value="-60">
+                <input type="range" id="knob-freq" name="knob-freq" min="-145" max="145" value="0">
             </div>
             <label for="knob-freq">Frequency</label>
 
@@ -112,8 +111,8 @@
 
         <!-- BUTTONS -->
         <section>
-            <button type="button">STOP</button>
-            <button type="button">START</button>
+            <label for="plant-state">STOP</label>
+            <label for="plant-state">START</label>
         </section>
 
         <!-- DISPLAY -->

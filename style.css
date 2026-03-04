@@ -330,7 +330,15 @@ main > section:nth-of-type(4) > div > input[type="range"] {
 
 /* MARK: BUTTONS */
 
-main > section:nth-of-type(5) > button {
+/* Hide the state checkbox */
+body > input[type="checkbox"]#plant-state {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+main > section:nth-of-type(5) > label {
     font-family: monospace;
     font-size: 0.5rem;
     letter-spacing: 0.15em;
@@ -339,15 +347,19 @@ main > section:nth-of-type(5) > button {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 80ms, box-shadow 80ms;
+    user-select: none;
 }
 
-main > section:nth-of-type(5) > button:active {
+main > section:nth-of-type(5) > label:active {
     transform: translateY(2px);
 }
 
-/* STOP */
-main > section:nth-of-type(5) > button:first-of-type {
+/* STOP — first label, always red */
+main > section:nth-of-type(5) > label:first-of-type {
     background: linear-gradient(to bottom, #dd1500, #aa1100);
     color: #ffbbbb;
     box-shadow:
@@ -356,15 +368,15 @@ main > section:nth-of-type(5) > button:first-of-type {
         inset 0 1px rgba(255, 130, 130, 0.25);
 }
 
-main > section:nth-of-type(5) > button:first-of-type:active {
+main > section:nth-of-type(5) > label:first-of-type:active {
     box-shadow:
         0 1px 0 #660a00,
         0 2px 4px rgba(0, 0, 0, 0.4),
         inset 0 1px rgba(255, 130, 130, 0.25);
 }
 
-/* START */
-main > section:nth-of-type(5) > button:last-of-type {
+/* START — last label, always green */
+main > section:nth-of-type(5) > label:last-of-type {
     background: linear-gradient(to bottom, #007700, #005500);
     color: #aaffaa;
     box-shadow:
@@ -373,7 +385,7 @@ main > section:nth-of-type(5) > button:last-of-type {
         inset 0 1px rgba(130, 255, 130, 0.15);
 }
 
-main > section:nth-of-type(5) > button:last-of-type:active {
+main > section:nth-of-type(5) > label:last-of-type:active {
     box-shadow:
         0 1px 0 #002200,
         0 2px 4px rgba(0, 0, 0, 0.4),
@@ -548,4 +560,11 @@ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
 /* Power gauge (4th figure) driven by knob-power */
 main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
     transform: translateX(-50%) rotate(calc(var(--knob-power) * 0.48deg));
+}
+
+/* MARK: STOP/START STATE */
+
+body > input#plant-state:not(:checked) ~ main > section:first-of-type > figure > div > span:nth-child(3) {
+    transform: translateX(-50%) rotate(-80deg);
+    transition: transform 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
