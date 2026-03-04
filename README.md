@@ -109,3 +109,29 @@
 
 ### what do i want to do next
 - finish styling the rest of the elements
+
+
+## 4 march 2026
+### What did i do today
+- Styled the rest of the elements
+- Styled the entire page
+- Made the page responsive
+- Made overload warning
+- Made the dials work
+
+### how long did it take
+- 30 minuits
+- 3 hours
+- 30 minuits
+- 30 minuits
+- 30 minuits
+
+### what did i learn
+- how to make things work with css only
+- how to make a page responsive with css only
+- how to make a overload warning with css only
+- how to make dials work with css only
+
+### what do i want to do next
+- add animations to the page
+- figure something out for what the control panel is controlling.
