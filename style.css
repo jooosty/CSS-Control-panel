@@ -241,7 +241,9 @@ main > section:nth-of-type(3) > input[type="checkbox"] + label {
 /* ── ROTARY KNOB ─────────────────────────────────────────────── */
 
 :root {
-    --knob: 0;
+    --knob-pressure: 0;
+    --knob-temp: 0;
+    --knob-power: 0;
 }
 
 /* Knob wrapper */
@@ -263,12 +265,22 @@ main > section:nth-of-type(4) > div > span {
     border: 2px solid #0a0a08;
     position: relative;
     pointer-events: none;
-    transform: rotate(calc(var(--knob) * 1deg));
+    transform: rotate(calc(var(--knob-pressure) * 1deg));
     transition: transform 120ms linear;
     box-shadow:
         inset 0 1px 2px rgba(255, 255, 255, 0.18),
         inset 0 -2px 4px rgba(0, 0, 0, 0.55),
         0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Temp knob */
+main > section:nth-of-type(4) > div:nth-of-type(2) > span {
+    transform: rotate(calc(var(--knob-temp) * 1deg));
+}
+
+/* Power knob */
+main > section:nth-of-type(4) > div:nth-of-type(3) > span {
+    transform: rotate(calc(var(--knob-power) * 1deg));
 }
 
 /* Tick mark */
