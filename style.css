@@ -114,36 +114,58 @@ main > section:first-of-type > figure > figcaption {
 
 /* ── INDICATOR ───────────────────────────────────────────────── */
 
-/* Hide the actual checkbox */
+/* Styled checkbox */
 main > section:nth-of-type(2) > input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+    appearance: none;
+    position: relative;
+    margin: 0;
+    width: 2.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
 }
 
 /* LED light */
-main > section:nth-of-type(2) > input[type="checkbox"] + label {
-    display: block;
-    width: 2.2rem;
-    height: 1.2rem;
+main>section:nth-of-type(2)>input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.4);
     background: #0a2a12;
-    cursor: pointer;
     box-shadow:
         inset 0 1px 3px rgba(0, 0, 0, 0.4),
         0 1px rgba(255, 255, 255, 0.1);
     transition: background 150ms, box-shadow 150ms;
 }
 
+/* LED core */
+main>section:nth-of-type(2)>input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    inset: 0.15rem;
+    border-radius: 1px;
+    background: rgba(0, 221, 85, 0.08);
+    transition: background 150ms;
+}
+
 /* LED on */
-main > section:nth-of-type(2) > input[type="checkbox"]:checked + label {
+main>section:nth-of-type(2)>input[type="checkbox"]:checked::before {
     background: #00dd55;
     box-shadow:
         0 0 8px rgba(0, 221, 85, 0.55),
         0 0 16px rgba(0, 221, 85, 0.25);
     animation: pulse 2.5s ease-in-out infinite;
+}
+
+main>section:nth-of-type(2)>input[type="checkbox"]:checked::after {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Keep label only as semantic click target */
+main>section:nth-of-type(2)>input[type="checkbox"]+label {
+    display: none;
 }
 
 @keyframes pulse {
@@ -153,26 +175,23 @@ main > section:nth-of-type(2) > input[type="checkbox"]:checked + label {
 
 /* ── TOGGLE SWITCH ───────────────────────────────────────────── */
 
-/* Hide the actual checkbox */
+/* Styled checkbox */
 main > section:nth-of-type(3) > input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* Switch label wrapper */
-main > section:nth-of-type(3) > input[type="checkbox"] + label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    appearance: none;
+        position: relative;
+        margin: 0;
+        width: 0.9rem;
+        height: 2.2rem;
     cursor: pointer;
+    background: transparent;
+        border: none;
 }
 
 /* Switch housing */
-main > section:nth-of-type(3) > input[type="checkbox"] + label::before {
+main>section:nth-of-type(3)>input[type="checkbox"]::before {
     content: '';
-    display: block;
+    position: absolute;
+        inset: 0;
     width: 0.9rem;
     height: 2.2rem;
     background:
@@ -184,9 +203,13 @@ main > section:nth-of-type(3) > input[type="checkbox"] + label::before {
     transition: background 150ms;
 }
 
-/* Label text — off state */
-main > section:nth-of-type(3) > input[type="checkbox"] + label::after {
+/* State text — off state */
+main>section:nth-of-type(3)>input[type="checkbox"]::after {
     content: 'OFF';
+    position: absolute;
+        top: calc(100% + 0.25rem);
+        left: 50%;
+        transform: translateX(-50%);
     font-family: monospace;
     font-size: 0.35rem;
     letter-spacing: 0.1em;
@@ -194,16 +217,24 @@ main > section:nth-of-type(3) > input[type="checkbox"] + label::after {
 }
 
 /* Switch DOWN — on state */
-main > section:nth-of-type(3) > input[type="checkbox"]:checked + label::before {
+main>section:nth-of-type(3)>input[type="checkbox"]:checked::before {
     background:
         linear-gradient(to bottom, transparent 0, transparent 1.35rem, #e0ddd5 1.35rem),
         linear-gradient(to bottom, #8a8a80, #5a5a50);
 }
 
-/* Label text — on state */
-main > section:nth-of-type(3) > input[type="checkbox"]:checked + label::after {
+/* State text — on state */
+main>section:nth-of-type(3)>input[type="checkbox"]:checked::after {
     content: 'ON';
     color: #00dd55;
+}
+/* Keep component caption style */
+main>section:nth-of-type(3)>input[type="checkbox"]+label {
+    margin-top: 0.6rem;
+    font-family: monospace;
+    font-size: 0.35rem;
+    color: #6a6860;
+    cursor: pointer;
 }
 /* ── ROTARY KNOB ─────────────────────────────────────────────── */
 
