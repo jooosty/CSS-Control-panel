@@ -31,6 +31,7 @@
         --knob-pressure: 0;
         --knob-temp: 0;
         --knob-power: 0;
+        container-type: style;  /* enables style queries on custom properties */
 
         /* Light theme */
         --color-bg:           #1c1c18;
@@ -803,5 +804,47 @@
 
     header > h1 {
         font-size: clamp(1.2rem, 8vw, 2rem);
+    }
+}
+
+/* MARK: OVERLOAD WARNING */
+
+@keyframes overload-flash {
+    0%, 100% {
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        border-color: var(--color-panel-border);
+    }
+    50% {
+        box-shadow:
+            0 0 0 3px #cc4400,
+            0 0 40px rgba(204, 68, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border-color: #ff5500;
+    }
+}
+
+@keyframes overload-display {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.2; }
+}
+
+@container style(--knob-power: 145) {
+    @container style(--knob-freq: 145) {
+        @container style(--knob-pressure: 145) {
+            @container style(--knob-temp: 145) {
+                [id="plant-state"]:checked ~ [id="sw-1"]:checked ~ [id="sw-2"]:checked ~ [id="sw-3"]:checked ~ main {
+                    animation: overload-flash 0.6s ease-in-out infinite;
+                }
+
+                [id="plant-state"]:checked ~ [id="sw-1"]:checked ~ [id="sw-2"]:checked ~ [id="sw-3"]:checked ~ main > section:nth-of-type(6) > figure > span:first-child {
+                    animation: overload-display 0.6s ease-in-out infinite;
+                    color: #ff5500;
+                    text-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+                }
+            }
+        }
     }
 }
