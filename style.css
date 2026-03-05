@@ -664,6 +664,9 @@
     /* MARK: DISPLAY */
 
     main > section:nth-of-type(6) > figure {
+        --output-total: calc(var(--knob-freq) + var(--knob-pressure) + var(--knob-temp) + var(--knob-power) + 580);
+        --output-percent: calc((var(--output-total) / 1160) * 100%);
+        --output-level: calc((var(--output-total) / 1160) * 20);
         background: var(--color-display-bg);
         border: 3px solid #1a1208;
         border-radius: var(--radius);
@@ -674,33 +677,157 @@
         gap: 0.2rem;
         box-shadow:
             inset 0 2px 8px rgba(0, 0, 0, 0.9),
-            inset 0 0 20px rgba(0,0,0,0.5);
+            inset 0 0 20px rgba(0, 0, 0, 0.5);
+        width: 9rem;
+        min-height: 4.8rem;
+        position: relative;
+        justify-content: flex-end;
+        overflow: hidden;
 
-        &:first-of-type {
-            width: 9rem;
-
-            & > span:first-child {
-                font-family: var(--font-mono);
-                font-size: 2.5rem;
-                color: var(--color-display-num);
-                letter-spacing: 0.15em;
-                text-shadow:
-                    0 0 8px rgba(255, 170, 0, 0.9),
-                    0 0 20px rgba(255, 140, 0, 0.5),
-                    0 0 40px rgba(255, 100, 0, 0.2);
-                animation: flicker 5s infinite;
-            }
+        &::after {
+            content: '';
+            width: 100%;
+            height: 0.35rem;
+            border: 1px solid #1a1208;
+            background:
+                linear-gradient(to right,
+                    #226622 0,
+                    #447722 40%,
+                    #9a7a00 70%,
+                    #aa3300 100%) no-repeat,
+                #120c08;
+            background-size: var(--output-percent) 100%, 100% 100%;
+            box-shadow:
+            inset 0 1px 2px rgba(0, 0, 0, 0.8),
+            0 0 6px rgba(255, 140, 0, 0.18);
         }
 
+        & > div:first-child {
+            width: 100%;
+            height: 2.9rem;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #1a1208;
+            background:
+                linear-gradient(to bottom, rgba(15, 10, 6, 0.95), rgba(8, 5, 3, 1));
+            box-shadow:
+                inset 0 2px 6px rgba(0, 0, 0, 0.85),
+                inset 0 0 16px rgba(0, 0, 0, 0.45);
+            margin-bottom: 0.2rem;
+        }
+        
+        & > div:first-child > span:nth-child(-n + 21) {
+            --distance: calc(var(--slot) - var(--output-level));
+            position: absolute;
+            top: 0.15rem;
+            left: 50%;
+            transform: translate(-50%, calc(var(--distance) * 2.9rem));
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            color: hsl(calc(122 - (var(--slot) * 4.6)) 92% 55%);
+            letter-spacing: 0.15em;
+            text-shadow:
+                0 0 8px hsl(calc(122 - (var(--slot) * 4.6)) 92% 55% / 0.85),
+                0 0 20px hsl(calc(122 - (var(--slot) * 4.6)) 92% 48% / 0.45),
+                0 0 40px hsl(calc(122 - (var(--slot) * 4.6)) 92% 42% / 0.2);
+            opacity: clamp(0, calc(1 - (var(--distance) * var(--distance))), 1);
+            transition: transform 220ms ease-out, opacity 220ms ease-out;
+            animation: flicker 5s infinite;
+            pointer-events: none;
+        }
+
+        & > div:first-child > span:nth-child(1) {
+            --slot: 0;
+        }  
+
+        & > div:first-child > span:nth-child(2) {
+            --slot: 1;
+        }
+        
+        & > div:first-child > span:nth-child(3) {
+            --slot: 2;
+        }
+        
+        & > div:first-child > span:nth-child(4) {
+            --slot: 3;
+        }
+        
+        & > div:first-child > span:nth-child(5) {
+            --slot: 4;
+        }
+
+        & > div:first-child > span:nth-child(6) {
+            --slot: 5;
+        }
+
+        & > div:first-child > span:nth-child(7) {
+            --slot: 6;
+        }
+
+        & > div:first-child > span:nth-child(8) {
+            --slot: 7;
+        }
+
+        & > div:first-child > span:nth-child(9) {
+            --slot: 8;
+        }
+
+        & > div:first-child > span:nth-child(10) {
+            --slot: 9;
+        }
+
+        & > div:first-child > span:nth-child(11) {
+            --slot: 10;
+        }
+
+        & > div:first-child > span:nth-child(12) {
+            --slot: 11;
+        }
+
+        & > div:first-child > span:nth-child(13) {
+            --slot: 12;
+        }
+
+        & > div:first-child > span:nth-child(14) {
+            --slot: 13;
+        }
+
+        & > div:first-child > span:nth-child(15) {
+            --slot: 14;
+        }
+
+        & > div:first-child > span:nth-child(16) {
+            --slot: 15;
+        }
+
+        & > div:first-child > span:nth-child(17) {
+            --slot: 16;
+        }
+
+        & > div:first-child > span:nth-child(18) {
+            --slot: 17;
+        }
+
+        & > div:first-child > span:nth-child(19) {
+            --slot: 18;
+        }
+
+        & > div:first-child > span:nth-child(20) {
+             --slot: 19;
+        }
+
+        & > div:first-child > span:nth-child(21) {
+            --slot: 20;
+        }
+        
         & > span:last-child {
             font-family: var(--font-mono);
             font-size: 0.9rem;
             color: rgba(255,170,0,0.35);
             letter-spacing: 0.3em;
+            margin-top: 0.15rem;
         }
     }
-
-
 
 }
 
@@ -733,16 +860,21 @@
 
     /* MARK: DISPLAY DIM — off by default, lit when running */
 
-    main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
-        opacity: 0.15;
-        animation: none;
+                                main>section:nth-of-type(6)>figure:first-of-type {
+                                    opacity: 0.35;
     }
 
-    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
+                                main>section:nth-of-type(6)>figure:first-of-type::after {
+                                    opacity: 0.25;
+                                }
+                
+                                #running:target~main>section:nth-of-type(6)>figure:first-of-type {
         opacity: 1;
-        animation: flicker 5s infinite;
     }
 
+                                #running:target~main>section:nth-of-type(6)>figure:first-of-type::after {
+                                    opacity: 1;
+                                }
     /* MARK: SWITCH ON STATES
        Selects by position — sw-1 is 1st checkbox, sw-2 is 2nd, sw-3 is 3rd */
 
@@ -836,10 +968,6 @@
 
     /* MARK: WARNING — switch off while plant running */
 
-    #running:target ~ main > section:nth-of-type(3) {
-        /* base — no warning */
-    }
-
     #running:target~input[type="checkbox"]:nth-of-type(1):not(:checked)~main>section:nth-of-type(3),
     #running:target~input[type="checkbox"]:nth-of-type(2):not(:checked)~main>section:nth-of-type(3),
     #running:target~input[type="checkbox"]:nth-of-type(3):not(:checked)~main>section:nth-of-type(3) {
@@ -864,7 +992,7 @@
                     #running:target ~ main {
                         animation: overload-flash 0.6s ease-in-out infinite;
                     }
-                    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type > span:first-child {
+                                                                                                                                                                #running:target~main>section:nth-of-type(6)>figure:first-of-type>div:first-of-type>span:nth-child(-n + 21) {
                         animation: overload-display 0.6s ease-in-out infinite;
                         color: #ff5500;
                         text-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
