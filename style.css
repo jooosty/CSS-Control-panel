@@ -840,10 +840,9 @@
         /* base — no warning */
     }
 
-    #running:target ~ main:has(~ * input[type="checkbox"]:nth-of-type(1):not(:checked)) > section:nth-of-type(3),
-    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(3),
-    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(3),
-    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(3) {
+    #running:target~input[type="checkbox"]:nth-of-type(1):not(:checked)~main>section:nth-of-type(3),
+    #running:target~input[type="checkbox"]:nth-of-type(2):not(:checked)~main>section:nth-of-type(3),
+    #running:target~input[type="checkbox"]:nth-of-type(3):not(:checked)~main>section:nth-of-type(3) {
         background-color: rgba(58, 26, 16, 0.55);
         border-color: #cc4400;
         animation: warning-enter 1s ease-out forwards, warning-pulse 2s ease-in-out 1s infinite;
