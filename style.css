@@ -909,7 +909,17 @@
     /* Disable decorative looping animations only — keep functional transitions */
     @keyframes pulse        { 0%, 100% { opacity: 1; } }
     @keyframes flicker      { 0%, 100% { opacity: 1; } }
-    @keyframes overload-flash   { 0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.6); } }
+    @keyframes overload-flash   { 
+        0%  {
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.6);
+        }
+        50% { 
+            box-shadow: 0 8px 32px rgb(255, 0, 0); 
+        } 
+        100% { 
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.6); 
+        }
+    }
     @keyframes overload-display { 0%, 100% { opacity: 1; } }
     @keyframes warning-enter {
         0% {
