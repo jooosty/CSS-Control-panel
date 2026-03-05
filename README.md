@@ -71,10 +71,16 @@
 
 - [timer](https://frontendmasters.com/blog/how-to-make-a-css-timer/)
 
+## Control panel ideas
 
-
-
-
+- Power plant
+- Space ship
+- Submarine
+- Nuclear missile silo
+- Factory
+- Steampunk machine
+- Time machine
+- Synthesizer
 
 
 
