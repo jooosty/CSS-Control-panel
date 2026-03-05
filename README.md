@@ -141,3 +141,24 @@
 ### what do i want to do next
 - add animations to the page
 - figure something out for what the control panel is controlling.
+
+
+## 5 march 2026
+### What did i do today
+- Added animations to the page
+- Made 2 different style pages to see what i like better
+- Made better power output animation
+- Made the overload warning more flashy
+
+### how long did it take
+- 1 hour
+- 2 hours
+- 1 hour
+- 30 minuits
+
+### what did i learn
+- How to work with only css to do things that would normally be done with javascript
+
+### what do i want to do next
+- figure something out for what the control panel is controlling.
+- add more animations to the page
