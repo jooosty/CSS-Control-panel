@@ -860,21 +860,21 @@
 
     /* MARK: DISPLAY DIM — off by default, lit when running */
 
-                                main>section:nth-of-type(6)>figure:first-of-type {
-                                    opacity: 0.35;
+    main>section:nth-of-type(6)>figure:first-of-type {
+        opacity: 0.35;
     }
 
-                                main>section:nth-of-type(6)>figure:first-of-type::after {
-                                    opacity: 0.25;
-                                }
+    main>section:nth-of-type(6)>figure:first-of-type::after {
+        opacity: 0.25;
+    }
                 
-                                #running:target~main>section:nth-of-type(6)>figure:first-of-type {
+    #running:target~main>section:nth-of-type(6)>figure:first-of-type {
         opacity: 1;
     }
 
-                                #running:target~main>section:nth-of-type(6)>figure:first-of-type::after {
-                                    opacity: 1;
-                                }
+    #running:target~main>section:nth-of-type(6)>figure:first-of-type::after {
+        opacity: 1;
+    }
     /* MARK: SWITCH ON STATES
        Selects by position — sw-1 is 1st checkbox, sw-2 is 2nd, sw-3 is 3rd */
 
