@@ -6,38 +6,47 @@
     <title>KRAFTWERK — Control Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- :target anchors for plant state -->
-    <div id="running"></div>
-    <div id="stopped"></div>
+    <!--
+        Hidden :target anchors — toggled by START / STOP buttons.
+        CSS uses #running:target and #stopped:target as plant state.
+    -->
+    <div id="running"  aria-hidden="true"></div>
+    <div id="stopped"  aria-hidden="true"></div>
 
-    <!-- Switch checkboxes  -->
-    <input type="checkbox" id="sw-1">
-    <input type="checkbox" id="sw-2">
-    <input type="checkbox" id="sw-3">
+    <!--
+        Switch checkboxes live here (outside <main>) so CSS sibling
+        selectors can reach both the switches section and the LEDs / knobs.
+    -->
+    <input type="checkbox" id="sw-1" aria-label="Pump A power">
+    <input type="checkbox" id="sw-2" aria-label="Pump B power">
+    <input type="checkbox" id="sw-3" aria-label="Turbine power">
 
     <header>
-        <h1>KRAFT<span>WERK</span></h1>
-        <p>Power Station Control Panel</p>
+        <p>Block A · Reaktor 1</p>
+        <h1><span>KRAFT</span>WERK</h1>
+        <p>Steuerpult — Control Panel</p>
     </header>
 
     <main aria-label="Control Panel">
 
-        <!-- GAUGES -->
+        <!-- ── GAUGES ── -->
         <section aria-label="Instrument gauges">
+
             <figure>
                 <div aria-hidden="true">
                     <span>Hz</span>
-                    <span></span>
-                    <span></span>
+                    <span></span><!-- arc -->
+                    <span></span><!-- needle -->
                     <span><i>48</i><i>50</i><i>52</i></span>
                 </div>
                 <figcaption>Frequency</figcaption>
             </figure>
+
             <figure>
                 <div aria-hidden="true">
                     <span>bar</span>
@@ -47,6 +56,7 @@
                 </div>
                 <figcaption>Pressure</figcaption>
             </figure>
+
             <figure>
                 <div aria-hidden="true">
                     <span>°C</span>
@@ -56,6 +66,7 @@
                 </div>
                 <figcaption>Temperature</figcaption>
             </figure>
+
             <figure>
                 <div aria-hidden="true">
                     <span>MW</span>
@@ -65,9 +76,10 @@
                 </div>
                 <figcaption>Power</figcaption>
             </figure>
+
         </section>
 
-        <!-- INDICATORS -->
+        <!-- ── INDICATORS ── -->
         <section aria-label="Status indicators">
             <input type="checkbox" id="led-1" checked aria-label="Indicator 1">
             <label for="led-1"></label>
@@ -75,7 +87,7 @@
             <input type="checkbox" id="led-2" checked aria-label="Indicator 2">
             <label for="led-2"></label>
 
-            <input type="checkbox" id="led-3" aria-label="Indicator 3">
+            <input type="checkbox" id="led-3"         aria-label="Indicator 3">
             <label for="led-3"></label>
 
             <input type="checkbox" id="led-4" checked aria-label="Indicator 4">
@@ -84,75 +96,76 @@
             <input type="checkbox" id="led-5" checked aria-label="Indicator 5">
             <label for="led-5"></label>
 
-            <input type="checkbox" id="led-6" aria-label="Indicator 6">
+            <input type="checkbox" id="led-6"         aria-label="Indicator 6">
             <label for="led-6"></label>
         </section>
 
-        <!-- TOGGLE SWITCHES — labels link to checkboxes outside main -->
+        <!-- ── TOGGLE SWITCHES ── labels link to the checkboxes above <main> -->
         <section aria-label="System switches">
             <label for="sw-1">Pump A</label>
             <label for="sw-2">Pump B</label>
             <label for="sw-3">Turbine</label>
         </section>
 
-        <!-- ROTARY KNOBS -->
+        <!-- ── ROTARY KNOBS ── -->
         <section aria-label="Control knobs">
+
             <div>
                 <span aria-hidden="true"></span>
-                <input type="range" id="knob-freq" name="knob-freq" min="-145" max="145" value="0" aria-label="Frequency control">
+                <input type="range" id="knob-freq" name="knob-freq"
+                       min="-145" max="145" value="0"
+                       aria-label="Frequency control">
             </div>
             <label for="knob-freq">Frequency</label>
 
             <div>
                 <span aria-hidden="true"></span>
-                <input type="range" id="knob-pressure" name="knob-pressure" min="-145" max="145" value="-40" aria-label="Pressure control">
+                <input type="range" id="knob-pressure" name="knob-pressure"
+                       min="-145" max="145" value="-40"
+                       aria-label="Pressure control">
             </div>
             <label for="knob-pressure">Pressure</label>
 
             <div>
                 <span aria-hidden="true"></span>
-                <input type="range" id="knob-temp" name="knob-temp" min="-145" max="145" value="20" aria-label="Temperature control">
+                <input type="range" id="knob-temp" name="knob-temp"
+                       min="-145" max="145" value="20"
+                       aria-label="Temperature control">
             </div>
             <label for="knob-temp">Temp</label>
 
             <div>
                 <span aria-hidden="true"></span>
-                <input type="range" id="knob-power" name="knob-power" min="-145" max="145" value="80" aria-label="Power control">
+                <input type="range" id="knob-power" name="knob-power"
+                       min="-145" max="145" value="80"
+                       aria-label="Power control">
             </div>
             <label for="knob-power">Power</label>
+
         </section>
 
-        <!-- BUTTONS — anchor links toggle :target state -->
+        <!-- ── PLANT CONTROLS — anchor links toggle :target state ── -->
         <section aria-label="Plant controls">
-            <a href="#stopped">STOP</a>
-            <a href="#running">START</a>
+            <a href="#stopped" role="button">STOP</a>
+            <a href="#running" role="button">START</a>
         </section>
 
-        <!-- DISPLAY -->
+        <!-- ── POWER OUTPUT DISPLAY ── -->
         <section aria-label="Power output display">
             <figure>
-                <div>
-                    <span>000</span>
-                    <span>050</span>
-                    <span>100</span>
-                    <span>150</span>
-                    <span>200</span>
-                    <span>250</span>
-                    <span>300</span>
-                    <span>350</span>
-                    <span>400</span>
-                    <span>450</span>
-                    <span>500</span>
-                    <span>550</span>
-                    <span>600</span>
-                    <span>650</span>
-                    <span>700</span>
-                    <span>750</span>
-                    <span>800</span>
-                    <span>850</span>
-                    <span>900</span>
-                    <span>950</span>
-                    <span>999</span>
+                <!--
+                    Scroll-drum: 21 spans, one per 50 MW step (000–999).
+                    CSS uses --slot (0–20) + --output-level to position the
+                    visible number in the drum window.
+                -->
+                <div aria-hidden="true">
+                    <span>000</span><span>050</span><span>100</span>
+                    <span>150</span><span>200</span><span>250</span>
+                    <span>300</span><span>350</span><span>400</span>
+                    <span>450</span><span>500</span><span>550</span>
+                    <span>600</span><span>650</span><span>700</span>
+                    <span>750</span><span>800</span><span>850</span>
+                    <span>900</span><span>950</span><span>999</span>
                 </div>
                 <span>MW</span>
             </figure>
@@ -161,22 +174,20 @@
     </main>
 
     <script>
-        // ONDERSTAANDE CODE MAG JE GEBRUIKEN
-        // NIETS AANPASSEN
-
+        // Range → CSS custom property bridge.
+        // Each input[type="range"] writes --{name} on :root.
         const ranges = document.querySelectorAll('[type="range"]');
 
         const updateRange = range => {
-            const rangeName = range.name;
-            const rangeValue = range.value;
-            document.documentElement.style.setProperty("--" + rangeName, rangeValue);
-        }
+            document.documentElement.style.setProperty(
+                '--' + range.name,
+                range.value
+            );
+        };
 
         ranges.forEach(range => {
             updateRange(range);
-            range.oninput = () => {
-                updateRange(range)
-            };
+            range.oninput = () => updateRange(range);
         });
     </script>
 

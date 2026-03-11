@@ -25,6 +25,15 @@
         font-size: 0.4rem;
     }
     header > h1 {
-        font-size: clamp(1.2rem, 8vw, 2rem);
+        font-size: clamp(2.8rem, 14vw, 4rem);
+        letter-spacing: 0.1em;
+    }
+    header > p:first-child {
+        font-size: 0.5rem;
+        letter-spacing: 0.3em;
+    }
+    header > p:last-child {
+        font-size: 0.5rem;
+        letter-spacing: 0.25em;
     }
 }

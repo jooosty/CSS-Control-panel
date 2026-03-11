@@ -33,8 +33,9 @@
         --color-switch-dark:  #3a3428;
 
         /* Typography */
-        --font-display: 'Special Elite', serif;
-        --font-mono:    'VT323', monospace;
+        --font-display: 'Teko', 'Arial Narrow', sans-serif;
+        --font-mono:    'Share Tech Mono', monospace;
+        --font-readout: 'VT323', monospace;  /* scroll-drum display only */
 
         /* Spacing */
         --gap-sm:  0.4rem;

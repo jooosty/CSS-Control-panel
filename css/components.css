@@ -424,7 +424,7 @@
             top: 0.15rem;
             left: 50%;
             transform: translate(-50%, calc(var(--distance) * 2.9rem));
-            font-family: var(--font-mono);
+            font-family: var(--font-readout);
             font-size: 2.5rem;
             color: hsl(calc(122 - (var(--slot) * 4.6)) 92% 55%);
             letter-spacing: 0.15em;
@@ -463,7 +463,7 @@
 
         /* MW unit label */
         & > span:last-child {
-            font-family: var(--font-mono);
+            font-family: var(--font-readout);
             font-size: 0.9rem;
             color: rgba(255,170,0,0.35);
             letter-spacing: 0.3em;

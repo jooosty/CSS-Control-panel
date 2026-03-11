@@ -47,36 +47,112 @@
         height: 0;
     }
 
-    /* ── Typography ── */
+    /* ── Header / Title plate ── */
 
     header {
         text-align: center;
         margin-bottom: var(--gap-lg);
+        position: relative;
 
-        & h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 400;
-            letter-spacing: 0.25em;
-            color: var(--color-text);
+        /*
+            Top classification strip — thin rule above and below.
+            Rendered via the first <p> (serial / unit code).
+        */
+        & > p:first-child {
+            font-family: var(--font-mono);
+            font-size: clamp(0.55rem, 1.4vw, 0.72rem);
+            letter-spacing: 0.45em;
+            color: var(--color-text-dim);
             text-transform: uppercase;
-            text-shadow:
-                2px 2px 0 rgba(0,0,0,0.5),
-                -1px -1px 0 rgba(255,255,220,0.1);
+            opacity: 0.55;
+            margin-bottom: 0.55rem;
 
-            & span {
+            /* Rules flanking the classification line */
+            display: flex;
+            align-items: center;
+            gap: 0.9em;
+            justify-content: center;
+
+            &::before,
+            &::after {
+                content: '';
+                flex: 1;
+                max-width: 5rem;
+                height: 1px;
+                background: linear-gradient(
+                    to var(--_dir, right),
+                    transparent,
+                    var(--color-text-dim)
+                );
+                opacity: 0.4;
+            }
+            &::before { --_dir: right; }
+            &::after  { --_dir: left;  }
+        }
+
+        /* ── Main logotype ── */
+        & > h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3.2rem, 10vw, 6.5rem);
+            font-weight: 700;
+            line-height: 0.92;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+
+            /*
+                Embossed metal-stamp effect:
+                light edge top-left, dark shadow bottom-right,
+                inner highlight for depth.
+            */
+            color: var(--color-text);
+            text-shadow:
+                0    1px 0   rgba(255, 255, 220, 0.18),   /* top highlight */
+                0   -1px 0   rgba(0,   0,   0,   0.55),   /* bottom shadow */
+                2px  3px 6px rgba(0,   0,   0,   0.65),   /* drop shadow   */
+                -1px -1px 0  rgba(255, 255, 200, 0.07);   /* inner glow    */
+
+            /* KRAFT in accent colour, WERK in text colour */
+            & > span {
                 color: var(--color-needle);
+                text-shadow:
+                    0    1px 0   rgba(255, 100,  50, 0.2),
+                    0   -1px 0   rgba(0,   0,   0,  0.6),
+                    2px  3px 6px rgba(0,   0,   0,  0.7),
+                    -1px -1px 0  rgba(255, 200, 150, 0.08);
             }
         }
 
-        & p {
+        /* Horizontal rules flanking the logotype */
+        & > h1::before,
+        & > h1::after {
+            display: none; /* reserved — rules live on the subtitle instead */
+        }
+
+        /* ── Subtitle / Panel designation ── */
+        & > p:last-child {
             font-family: var(--font-mono);
-            font-size: clamp(0.8rem, 2vw, 1rem);
-            letter-spacing: 0.4em;
+            font-size: clamp(0.6rem, 1.6vw, 0.82rem);
+            letter-spacing: 0.38em;
             color: var(--color-text-dim);
             text-transform: uppercase;
-            margin-top: 0.2rem;
-            opacity: 0.7;
+            margin-top: 0.6rem;
+            opacity: 0.65;
+
+            /* Engraved label-strip feel: thin rules on each side */
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+            justify-content: center;
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                width: 2.5rem;
+                height: 1px;
+                background: var(--color-text-dim);
+                opacity: 0.35;
+            }
         }
     }
 }
