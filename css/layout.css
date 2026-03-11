@@ -1,0 +1,148 @@
+/* ============================================================
+   LAYOUT — Panel shell and section grid slots
+   ============================================================ */
+
+@layer layout {
+
+    /* ── Panel ── */
+
+    main {
+        background:
+            /* Worn paint grain */
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E"),
+            var(--color-panel);
+        border: 3px solid var(--color-panel-border);
+        border-radius: var(--radius);
+        padding: var(--gap-lg);
+        padding-top: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-lg);
+        width: 100%;
+        max-width: 44rem;
+        container-type: inline-size;
+        container-name: panel;
+        position: relative;
+        box-shadow:
+            0 12px 48px rgba(0, 0, 0, 0.8),
+            inset 0 1px 0 rgba(255, 255, 245, 0.12),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.35),
+            inset 3px 0 6px rgba(0, 0, 0, 0.2),
+            inset -3px 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Rivets — four corners via pseudo-element */
+    main::before {
+        content: '';
+        position: absolute;
+        inset: 0.6rem;
+        border: 1px solid rgba(0,0,0,0.25);
+        pointer-events: none;
+        background:
+            radial-gradient(circle, #5a5040 3px, transparent 3px) 0 0,
+            radial-gradient(circle, #5a5040 3px, transparent 3px) calc(100%) 0,
+            radial-gradient(circle, #5a5040 3px, transparent 3px) 0 calc(100%),
+            radial-gradient(circle, #5a5040 3px, transparent 3px) calc(100%) calc(100%);
+        background-repeat: no-repeat;
+        background-size: 10px 10px;
+    }
+
+    /* ── Section slots ── */
+
+    /* Gauges — 2×2 grid */
+    main > section:first-of-type {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--gap-sm);
+    }
+
+    /* Indicators strip */
+    main > section:nth-of-type(2) {
+        background: var(--color-section-dim);
+        border: 2px solid var(--color-panel-border);
+        border-top-color: rgba(0,0,0,0.4);
+        border-left-color: rgba(0,0,0,0.4);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap-sm);
+        align-items: center;
+        box-shadow:
+            inset 0 2px 6px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255,255,245,0.05);
+    }
+
+    /* Switches row */
+    main > section:nth-of-type(3) {
+        background: var(--color-section);
+        border: 2px solid var(--color-panel-border);
+        border-top-color: rgba(0,0,0,0.4);
+        border-left-color: rgba(0,0,0,0.4);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        gap: var(--gap-lg);
+        align-items: flex-start;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    /* Knobs row */
+    main > section:nth-of-type(4) {
+        background: var(--color-section);
+        border: 2px solid var(--color-panel-border);
+        border-top-color: rgba(0,0,0,0.4);
+        border-left-color: rgba(0,0,0,0.4);
+        border-radius: var(--radius);
+        padding: var(--pad-md);
+        display: flex;
+        gap: var(--gap-lg);
+        align-items: center;
+        flex-wrap: wrap;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.35);
+
+        & > div {
+            position: relative;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        & > label {
+            font-size: 0.4rem;
+            letter-spacing: 0.12em;
+            color: var(--color-text-dim);
+            text-transform: uppercase;
+        }
+    }
+
+    /* Buttons row */
+    main > section:nth-of-type(5) {
+        background: var(--color-section);
+        border: 2px solid var(--color-panel-border);
+        border-top-color: rgba(0,0,0,0.4);
+        border-left-color: rgba(0,0,0,0.4);
+        border-radius: var(--radius);
+        padding: var(--pad-sm);
+        display: flex;
+        gap: var(--gap-md);
+        align-items: center;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    /* Display */
+    main > section:nth-of-type(6) {
+        background: #0a0804;
+        border: 3px solid #1a1208;
+        border-top-color: rgba(0,0,0,0.6);
+        border-left-color: rgba(0,0,0,0.6);
+        border-radius: var(--radius);
+        padding: 0.75rem;
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        align-items: center;
+        box-shadow:
+            inset 0 3px 10px rgba(0, 0, 0, 0.9),
+            inset 0 0 30px rgba(0,0,0,0.6);
+    }
+}

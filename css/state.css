@@ -1,0 +1,160 @@
+/* ============================================================
+   STATE — All interactive state driven by :target & checkboxes
+   Sections: needle binding · display dim · switch ON
+             · LED by switch · knob disable · gauge drop
+             · warning · overload
+   ============================================================ */
+
+@layer state {
+
+    /* ── Gauge needle → knob binding (plant running only) ── */
+
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-freq)     * 0.48deg));
+    }
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-pressure) * 0.48deg));
+    }
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-temp)     * 0.48deg));
+    }
+    #running:target ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(calc(var(--knob-power)    * 0.48deg));
+    }
+
+    /* ── Display dim — off by default, lit when running ── */
+
+    main > section:nth-of-type(6) > figure:first-of-type {
+        opacity: 0.35;
+    }
+    main > section:nth-of-type(6) > figure:first-of-type::after {
+        opacity: 0.25;
+    }
+
+    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type {
+        opacity: 1;
+    }
+    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type::after {
+        opacity: 1;
+    }
+
+    /* ── Switch ON states ── */
+
+    body > input[type="checkbox"]:nth-of-type(1):checked ~ main > section:nth-of-type(3) > label:nth-of-type(1) {
+        &::before { background-position: 0 0%, 0 0; }
+        &::after  { content: 'ON'; color: #8aaa60; }
+    }
+    body > input[type="checkbox"]:nth-of-type(2):checked ~ main > section:nth-of-type(3) > label:nth-of-type(2) {
+        &::before { background-position: 0 0%, 0 0; }
+        &::after  { content: 'ON'; color: #8aaa60; }
+    }
+    body > input[type="checkbox"]:nth-of-type(3):checked ~ main > section:nth-of-type(3) > label:nth-of-type(3) {
+        &::before { background-position: 0 0%, 0 0; }
+        &::after  { content: 'ON'; color: #8aaa60; }
+    }
+
+    /* ── LED control by switch ──
+       Switch off → LED forced dark regardless of own checkbox state
+       Switch on  → LED follows its own checkbox                    */
+
+    /* Switch 1 off → LEDs 1 & 2 dark */
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::before,
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::before {
+        background: var(--color-led-off) !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.4) !important;
+        animation: none !important;
+    }
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(1)::after,
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(2)::after {
+        background: transparent !important;
+    }
+
+    /* Switch 2 off → LEDs 3 & 4 dark */
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::before,
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::before {
+        background: var(--color-led-off) !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.4) !important;
+        animation: none !important;
+    }
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(3)::after,
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(4)::after {
+        background: transparent !important;
+    }
+
+    /* Switch 3 off → LEDs 5 & 6 dark */
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::before,
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::before {
+        background: var(--color-led-off) !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.4) !important;
+        animation: none !important;
+    }
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(5)::after,
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(2) > input:nth-of-type(6)::after {
+        background: transparent !important;
+    }
+
+    /* ── Knob disable by switch ── */
+
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(2) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(3) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(1),
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(4) > div:nth-of-type(4) {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    /* ── Gauge needle drop when switch is off ── */
+
+    body > input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(2) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+    body > input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(3) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(1) > div > span:nth-child(3),
+    body > input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:first-of-type > figure:nth-of-type(4) > div > span:nth-child(3) {
+        transform: translateX(-50%) rotate(-65deg);
+    }
+
+    /* ── Warning — switch turned off while plant is running ── */
+
+    #running:target ~ input[type="checkbox"]:nth-of-type(1):not(:checked) ~ main > section:nth-of-type(3),
+    #running:target ~ input[type="checkbox"]:nth-of-type(2):not(:checked) ~ main > section:nth-of-type(3),
+    #running:target ~ input[type="checkbox"]:nth-of-type(3):not(:checked) ~ main > section:nth-of-type(3) {
+        background-color: rgba(58,26,16,0.55);
+        border-color: #cc4400;
+        animation: warning-enter 1s ease-out forwards, warning-pulse 2s ease-in-out 1s infinite;
+    }
+
+    /* Reset switch section when stopped */
+    #stopped:target ~ main > section:nth-of-type(3),
+    main > section:nth-of-type(3) {
+        background: var(--color-section);
+        border-color: var(--color-panel-border);
+    }
+
+    /* ── Overload warning — all knobs at maximum ── */
+
+    @container style(--knob-power: 145) {
+        @container style(--knob-freq: 145) {
+            @container style(--knob-pressure: 145) {
+                @container style(--knob-temp: 145) {
+                    #running:target ~ main {
+                        animation: overload-flash 0.6s ease-in-out infinite;
+                    }
+                    #running:target ~ main > section:nth-of-type(6) > figure:first-of-type > div:first-of-type > span:nth-child(-n + 21) {
+                        animation: overload-display 0.6s ease-in-out infinite;
+                        color: #ff5500;
+                        text-shadow: 0 0 20px rgba(255,85,0,0.8);
+                    }
+                }
+            }
+        }
+    }
+}

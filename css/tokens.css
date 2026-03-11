@@ -1,0 +1,70 @@
+/* ============================================================
+   TOKENS — Design tokens, CSS custom properties
+   Light theme: Soviet Bakelite instrument panel, c.1962
+   ============================================================ */
+
+@layer tokens {
+
+    :root {
+        /* Knob values — driven by JS range script */
+        --knob-freq:     0;
+        --knob-pressure: 0;
+        --knob-temp:     0;
+        --knob-power:    0;
+        container-type: style;
+
+        /* Colour palette */
+        --color-bg:           #2a2418;
+        --color-panel:        #7a7055;
+        --color-panel-border: #4a4232;
+        --color-section:      #6a6248;
+        --color-section-dim:  #5c5440;
+        --color-gauge-bg:     #8a8068;
+        --color-gauge-face:   #f0e8d0;
+        --color-text:         #e8dfc0;
+        --color-text-dim:     #a89e80;
+        --color-needle:       #c83200;
+        --color-led-off:      #0e1a0a;
+        --color-led-on:       #4a7a3a;
+        --color-display-bg:   #080604;
+        --color-display-num:  #ffaa00;
+        --color-switch-thumb: #d8ceb0;
+        --color-switch-track: #6a6248;
+        --color-switch-dark:  #3a3428;
+
+        /* Typography */
+        --font-display: 'Special Elite', serif;
+        --font-mono:    'VT323', monospace;
+
+        /* Spacing */
+        --gap-sm:  0.4rem;
+        --gap-md:  0.75rem;
+        --gap-lg:  1.5rem;
+        --pad-sm:  0.5rem 0.75rem;
+        --pad-md:  0.75rem;
+        --radius:  0px;
+    }
+
+    /* Dark theme */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --color-bg:           #0e0c08;
+            --color-panel:        #3a3428;
+            --color-panel-border: #28221a;
+            --color-section:      #2e2820;
+            --color-section-dim:  #241e18;
+            --color-gauge-bg:     #3e3830;
+            --color-gauge-face:   #1c1810;
+            --color-text:         #c8be9e;
+            --color-text-dim:     #7a7260;
+            --color-needle:       #e03800;
+            --color-led-off:      #080e06;
+            --color-led-on:       #3d6630;
+            --color-display-bg:   #060402;
+            --color-display-num:  #ff9900;
+            --color-switch-thumb: #a09080;
+            --color-switch-track: #4a4238;
+            --color-switch-dark:  #2a2420;
+        }
+    }
+}
