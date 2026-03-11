@@ -166,3 +166,18 @@
 ### what do i want to do next
 - figure something out for what the control panel is controlling.
 - add more animations to the page
+
+## 11 march 2026
+
+### What did i do today
+- Restrucuted files
+- Changed the styling of the title and made verythign english
+- Made some easter eggs
+
+### how long did it take
+- 1 hour
+- 1 hour
+- 2,5 hours
+
+### what did i learn
+- How to use different type of ways for colors to use gradients.
