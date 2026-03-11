@@ -71,6 +71,10 @@
 
 - [timer](https://frontendmasters.com/blog/how-to-make-a-css-timer/)
 
+## Coffee stain docs
+
+- [Coffee stain](https://alvaromontoro.com/blog/68035/css-art-drawing-a-coffee-stain)
+
 ## Control panel ideas
 
 - Power plant

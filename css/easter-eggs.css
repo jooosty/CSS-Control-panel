@@ -75,17 +75,57 @@
 
     main > span:first-of-type {
         position: absolute;
-        top: 7.5rem;
-        left: 1.8rem;
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 50%;
-        border: 2px solid rgba(180, 140, 80, 0.12);
-        box-shadow:
-            0 0 0 3px rgba(160, 120, 60, 0.06),
-            inset 0 0 0 4px rgba(140, 100, 50, 0.04);
+        bottom: 2.8rem;
+        left: 2.2rem;
+        width: 2.6rem;
+        height: 2.4rem;
         pointer-events: none;
-        transform: rotate(-12deg) scaleX(0.88);
+        transform: rotate(7deg) scaleX(0.92);
+
+        /* Main ring — uneven, heavier residue on one arc like dried coffee */
+        border-radius: 50%;
+        background: transparent;
+        box-shadow:
+            /* Outer ring edge */
+            0 0 0 2.5px rgba(155, 110, 55, 0.22),
+            0 0 0 3.5px rgba(140, 95, 40, 0.09),
+            /* Thicker dried residue arc — bottom-right of ring */
+            4px 5px 0 2px rgba(162, 118, 52, 0.18),
+            5px 3px 0 1.5px rgba(158, 114, 48, 0.13),
+            /* Faint inner wash — coffee soaked slightly inward */
+            inset 0 0 6px rgba(120, 80, 30, 0.06),
+            inset 3px 3px 4px rgba(130, 90, 35, 0.04);
+    }
+
+    /* Small splash droplets nearby */
+    main > span:first-of-type::before {
+        content: '';
+        position: absolute;
+        top: -0.6rem;
+        right: -0.9rem;
+        width: 0.32rem;
+        height: 0.26rem;
+        border-radius: 50% 60% 55% 45%;
+        background: rgba(150, 105, 45, 0.13);
+        box-shadow:
+             0.55rem  0.4rem  0 0.05rem rgba(145, 100, 42, 0.10),
+            -0.3rem   0.85rem 0 0.02rem rgba(140,  95, 40, 0.08),
+             1.1rem  -0.15rem 0 0.03rem rgba(148, 103, 44, 0.09);
+        transform: rotate(-18deg);
+    }
+
+    /* Smear / satellite droplet below the ring */
+    main > span:first-of-type::after {
+        content: '';
+        position: absolute;
+        bottom: -0.55rem;
+        left: 0.25rem;
+        width: 0.6rem;
+        height: 0.18rem;
+        border-radius: 50%;
+        background: rgba(148, 104, 43, 0.11);
+        transform: rotate(20deg) scaleX(1.5);
+        box-shadow: 0.45rem -0.12rem 0 0.02rem rgba(145, 100, 42, 0.08);
     }
 
     /* ── 8: Pump B label worn off ── */
