@@ -1,0 +1,183 @@
+/* ============================================================
+   EASTER EGGS 🥚
+   ──────────────────────────────────────────────────────────
+   1. Meltdown       — all knobs max + running → EMERGENCY + shake
+   3. Title hover    — hover h1 2s → Kraftwerk Power Station fades in
+   5. Inspection stamp — hidden stamp on panel
+   6. Engraving      — Eng. J.R. Krebbers on panel edge
+   7. Coffee ring    — faint cup stain on panel surface
+   8. Worn label     — Pump B text nearly invisible, restores on hover
+   ============================================================ */
+
+@layer components {
+
+    /* ── 3: Plant name reveal on title hover ── */
+
+    header > p:last-child {
+        font-family: var(--font-mono);
+        font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+        letter-spacing: 0.35em;
+        color: var(--color-needle);
+        text-transform: uppercase;
+        margin-top: 0.35rem;
+        opacity: 0;
+        animation: none;
+    }
+
+    header > h1:hover ~ p:last-child {
+        animation: plant-reveal 0.6s ease-out 1.8s forwards;
+    }
+
+    @keyframes plant-reveal {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 0.75; transform: translateY(0); }
+    }
+
+    /* ── 5: Inspection stamp ── */
+
+    main > p:first-of-type {
+        position: absolute;
+        top: 1.6rem;
+        right: 2.2rem;
+        font-family: var(--font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.25em;
+        color: var(--color-text-dim);
+        text-transform: uppercase;
+        opacity: 0.18;
+        transform: rotate(8deg);
+        border: 1px solid currentColor;
+        padding: 0.15rem 0.35rem;
+        pointer-events: none;
+        mix-blend-mode: multiply;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+    }
+
+    /* ── 6: Engineer engraving ── */
+
+    main > p:nth-of-type(2) {
+        position: absolute;
+        bottom: 0.55rem;
+        right: 1.4rem;
+        font-family: var(--font-mono);
+        font-size: 0.45rem;
+        letter-spacing: 0.18em;
+        color: var(--color-text-dim);
+        opacity: 0.22;
+        font-style: italic;
+        pointer-events: none;
+        text-shadow:
+            0 1px 0 rgba(255,255,220,0.12),
+            0 -1px 0 rgba(0,0,0,0.4);
+    }
+
+    /* ── 7: Coffee cup ring stain ── */
+
+    main > span:first-of-type {
+        position: absolute;
+        top: 7.5rem;
+        left: 1.8rem;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        border: 2px solid rgba(180, 140, 80, 0.12);
+        box-shadow:
+            0 0 0 3px rgba(160, 120, 60, 0.06),
+            inset 0 0 0 4px rgba(140, 100, 50, 0.04);
+        pointer-events: none;
+        transform: rotate(-12deg) scaleX(0.88);
+    }
+
+    /* ── 8: Pump B label worn off ── */
+
+    main > section:nth-of-type(3) > label:nth-of-type(2)::after {
+        opacity: 0.12;
+    }
+
+    main > section:nth-of-type(3) > label:nth-of-type(2):hover::after {
+        opacity: 0.55;
+        transition: opacity 600ms ease;
+    }
+}
+
+/* ── 1: Meltdown — EMERGENCY overlay ── */
+
+@layer state {
+
+    /* Hidden by default */
+    main > p:last-of-type {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: #ff2200;
+        text-shadow:
+            0 0 20px rgba(255, 34, 0, 0.8),
+            0 0 60px rgba(255, 34, 0, 0.4);
+        pointer-events: none;
+        opacity: 0;
+        background: rgba(40, 0, 0, 0);
+        z-index: 10;
+        border-radius: inherit;
+    }
+
+    /* Fires when overload condition is met + plant running */
+    @container style(--knob-power: 145) {
+        @container style(--knob-freq: 145) {
+            @container style(--knob-pressure: 145) {
+                @container style(--knob-temp: 145) {
+                    #running:target ~ main > p:last-of-type {
+                        opacity: 1;
+                        animation: emergency-pulse 0.8s ease-in-out infinite;
+                    }
+                    #running:target ~ main {
+                        animation: meltdown-shake 0.15s ease-in-out infinite,
+                                   overload-flash 0.6s ease-in-out infinite;
+                    }
+                }
+            }
+        }
+    }
+
+    @keyframes emergency-pulse {
+        0%, 100% {
+            opacity: 1;
+            text-shadow:
+                0 0 20px rgba(255,34,0,0.8),
+                0 0 60px rgba(255,34,0,0.4);
+            background: rgba(40,0,0,0);
+        }
+        50% {
+            opacity: 0.7;
+            text-shadow:
+                0 0 40px rgba(255,34,0,1),
+                0 0 80px rgba(255,34,0,0.6);
+            background: rgba(80,0,0,0.15);
+        }
+    }
+
+    @keyframes meltdown-shake {
+        0%   { transform: translate(0, 0) rotate(0deg); }
+        20%  { transform: translate(-1px, 1px) rotate(-0.3deg); }
+        40%  { transform: translate(1px, -1px) rotate(0.3deg); }
+        60%  { transform: translate(-1px, -1px) rotate(-0.2deg); }
+        80%  { transform: translate(1px, 1px) rotate(0.2deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    /* Reduced motion: no shake, just the flash */
+    @media (prefers-reduced-motion: reduce) {
+        @keyframes meltdown-shake {
+            0%, 100% { transform: none; }
+        }
+        @keyframes emergency-pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.6; }
+        }
+    }
+}

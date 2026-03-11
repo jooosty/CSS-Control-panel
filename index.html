@@ -11,28 +11,32 @@
 </head>
 <body>
 
-    <!--
-        Hidden :target anchors — toggled by START / STOP buttons.
-        CSS uses #running:target and #stopped:target as plant state.
-    -->
     <div id="running"  aria-hidden="true"></div>
     <div id="stopped"  aria-hidden="true"></div>
 
-    <!--
-        Switch checkboxes live here (outside <main>) so CSS sibling
-        selectors can reach both the switches section and the LEDs / knobs.
-    -->
     <input type="checkbox" id="sw-1" aria-label="Pump A power">
     <input type="checkbox" id="sw-2" aria-label="Pump B power">
     <input type="checkbox" id="sw-3" aria-label="Turbine power">
 
     <header>
-        <p>Block A · Reaktor 1</p>
+        <p>Block A · Reactor 1</p>
         <h1><span>KRAFT</span>WERK</h1>
-        <p>Steuerpult — Control Panel</p>
+        
+        <!-- Easter egg 3: hover h1 for 2s → plant name fades in -->
+        <p>Control Panel</p>
+        <p aria-hidden="true">Kraftwerk Power Station · Block A · 1974</p>
     </header>
 
     <main aria-label="Control Panel">
+
+        <!-- Easter egg 5: inspection stamp — hidden detail -->
+        <p aria-hidden="true">INSPECTED · 1974</p>
+
+        <!-- Easter egg 6: engineer engraving -->
+        <p aria-hidden="true">Eng. J.R. Krebbers</p>
+
+        <!-- Easter egg 7: coffee cup ring stain on panel surface -->
+        <span aria-hidden="true"></span>
 
         <!-- ── GAUGES ── -->
         <section aria-label="Instrument gauges">
@@ -103,6 +107,7 @@
         <!-- ── TOGGLE SWITCHES ── labels link to the checkboxes above <main> -->
         <section aria-label="System switches">
             <label for="sw-1">Pump A</label>
+            <!-- Easter egg 8: Pump B label worn off — barely visible, restores on hover -->
             <label for="sw-2">Pump B</label>
             <label for="sw-3">Turbine</label>
         </section>
@@ -153,11 +158,6 @@
         <!-- ── POWER OUTPUT DISPLAY ── -->
         <section aria-label="Power output display">
             <figure>
-                <!--
-                    Scroll-drum: 21 spans, one per 50 MW step (000–999).
-                    CSS uses --slot (0–20) + --output-level to position the
-                    visible number in the drum window.
-                -->
                 <div aria-hidden="true">
                     <span>000</span><span>050</span><span>100</span>
                     <span>150</span><span>200</span><span>250</span>
@@ -170,6 +170,9 @@
                 <span>MW</span>
             </figure>
         </section>
+
+        <!-- Easter egg 1: EMERGENCY meltdown — appears when all knobs max + running -->
+        <p aria-hidden="true" aria-live="assertive">⚠ EMERGENCY ⚠</p>
 
     </main>
 

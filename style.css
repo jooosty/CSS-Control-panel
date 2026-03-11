@@ -15,6 +15,7 @@
    ├── css/components.css  Gauge · LED · switch · knob · button · display
    ├── css/animations.css  @keyframes + reduced-motion overrides
    ├── css/state.css       :target / checkbox driven state
+   ├── css/easter-eggs.css Hidden details & interactions
    └── css/responsive.css  Container & media queries
    ============================================================ */
 
@@ -27,4 +28,5 @@
 @import url("css/components.css");
 @import url("css/animations.css");
 @import url("css/state.css");
+@import url("css/easter-eggs.css");
 @import url("css/responsive.css");
