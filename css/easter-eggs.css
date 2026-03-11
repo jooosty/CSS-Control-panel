@@ -75,10 +75,10 @@
 
     main > span:first-of-type {
         position: absolute;
-        bottom: 2.8rem;
-        left: 2.2rem;
-        width: 2.6rem;
-        height: 2.4rem;
+        bottom: 3.8rem;
+        left: 3.2rem;
+        width: 7.8rem;
+        height: 7.2rem;
         pointer-events: none;
         transform: rotate(7deg) scaleX(0.92);
 
