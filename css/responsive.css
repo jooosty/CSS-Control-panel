@@ -2,6 +2,90 @@
    RESPONSIVE — Container & media query overrides
    ============================================================ */
 
+/* ── Large screens: fit everything in one viewport ── */
+
+@media (min-width: 900px) {
+
+    body {
+        padding: 1rem;
+        height: 100dvh;
+        overflow: hidden;
+        align-content: center;
+    }
+
+    header {
+        margin-bottom: 0.6rem;
+    }
+
+    header > h1 {
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 0.9;
+    }
+
+    header > p:first-child {
+        margin-bottom: 0.3rem;
+    }
+
+    main {
+        max-width: 90vw;
+        gap: 0.6rem;
+        padding: 1rem 1.2rem;
+        padding-top: 1.6rem;
+    }
+
+    /* Gauges — 4 columns, 1 row */
+    main > section:first-of-type {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+    }
+
+    /* Shrink gauge face height so the 4-up row stays compact */
+    main > section:first-of-type > figure > div {
+        aspect-ratio: 4 / 3;
+    }
+
+    main > section:first-of-type > figure > figcaption {
+        font-size: 0.7rem;
+    }
+
+    /* Tighten up the other sections */
+    main > section:nth-of-type(2) {
+        padding: 0.3rem 0.6rem;
+    }
+
+    main > section:nth-of-type(3) {
+        padding: 0.3rem 0.6rem;
+        gap: var(--gap-md);
+    }
+
+    main > section:nth-of-type(4) {
+        padding: 0.4rem 0.75rem;
+        gap: var(--gap-md);
+    }
+
+    main > section:nth-of-type(5) {
+        padding: 0.3rem 0.6rem;
+    }
+
+    main > section:nth-of-type(6) {
+        padding: 0.4rem 0.75rem;
+    }
+
+    main > section:nth-of-type(6) > figure {
+        min-height: 4rem;
+    }
+}
+
+/* ── Medium screens: 2×2 gauge grid ── */
+
+@container panel (max-width: 55rem) {
+    main > section:first-of-type {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ── Small screens: single column gauges ── */
+
 @container panel (max-width: 28rem) {
     main > section:first-of-type {
         grid-template-columns: 1fr;
