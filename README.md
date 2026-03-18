@@ -95,7 +95,6 @@
 
 
 
-
 ## 19 februari 2026
 ### What did i do today
 - Gave presentation for about initiation project, and listend to other presentations.
@@ -119,6 +118,43 @@
 
 ### what do i want to do next
 - finish styling the rest of the elements
+
+---
+
+## 📋 Week 1 Report - Plan
+
+### Assignment choice & options selected
+A retro power plant control panel inspired byGerman nuclear plant control rooms. The concept is a fictional plant called KRAFTWERK German for "power plant". The panel includes analog gauges, toggle switches, rotary knobs, status LEDs, a power output display, and start/stop plant controls.
+
+### Which CSS techniques will you start with?
+- CSS child selectors (`>`)
+- Anchor positioning (`:target` for plant on/off state)
+- Carousel styling
+- Scroll-driven animations
+
+### Where do your major challenges lie?
+- Making the rotary knobs work and visually rotate using only CSS and a minimal JS range bridge (no logic JS)
+- Connecting knob values to gauge needles purely through CSS custom properties
+- Making the panel feel authentically aged and physical without images
+- Keeping everything responsive while maintaining the dense instrument-panel layout
+
+### Reference images
+![Reference image](image.png)
+[Reference link 2](https://www.flickr.com/photos/192959875@N05/55045013694/in/pool-controlpanel/)
+
+[Reference link 3](https://www.flickr.com/photos/192959875@N05/55045006854/in/pool-controlpanel/)
+
+### Initial breakdown sketch
+Components planned:
+- Header / logotype (KRAFTWERK title plate)
+- Instrument gauges × 4 (Frequency, Pressure, Temperature, Power)
+- Status LEDs × 6
+- Toggle switches × 3 (Pump A, Pump B, Turbine)
+- Rotary knobs × 4
+- START / STOP plant controls
+- Power output scroll display (MW readout)
+
+---
 
 
 ## 4 march 2026
@@ -167,6 +203,40 @@
 - figure something out for what the control panel is controlling.
 - add more animations to the page
 
+---
+
+## 📋 Week 2 Report - Progress 
+
+### Progress so far
+This week the bulk of the visual work came together. All elements got styled, the page became fully responsive, and key interactive pieces like the dials and overload warning were implemented using pure CSS. Two style variants were made to compare directions.
+
+### What went smoothly?
+- Styling individual elements once the base HTML was in place went quickly 
+- Making the page responsive with CSS only worked out well
+- The overload warning and dial mechanics came together without needing JavaScript
+
+### What was challenging?
+- Getting the dials to behave correctly with CSS alone
+- Deciding between the two style variants
+- The full page styling took significantly longer than individual components
+
+### Experiments that 'failed'
+- Tried to randomize the starting values of the range inputs (knobs) using CSS alone, but CSS has no random capabilities that can set initial input values.
+
+### New insights into the power of CSS
+- CSS alone can handle things typically reserved for JavaScript, such as interactive dials, responsive layouts, and conditional warnings
+- CSS-only interactivity requires thinking differently about state (`:checked`, `:hover`, `@keyframes`, etc.)
+
+### Changes to initial plan
+- Still figuring out what the control panel is actually controlling — this remains open
+
+### Challenges for next week
+- Deciding on a narrative/concept for what the control panel controls
+- Adding more animations
+
+---
+
+
 ## 11 march 2026
 
 ### What did i do today
@@ -186,3 +256,63 @@
 
 ### how long did it take
 - 4 hours
+
+---
+
+## 📋 Week 2 & 3 Report — Progress (Part 2)
+
+### Progress so far
+This week was more about polish and hidden details. The title got a visual overhaul, everything was translated to English, and easter eggs were added. A significant amoutn of time went into restructuring files.
+
+### What went smoothly?
+- Adding easter eggs was creative and fun, even if time-intensive
+- Title restyling came together within an hour
+
+### What was challenging?
+- File restructuring took a full 4 hours.
+
+### Experiments that 'failed'
+- I wanted to add sound effects to the control panel using only CSS, but this is not possible as CSS has no audio capabilities.
+
+### New insights into the power of CSS
+- Color syntax variety (hex, hsl, oklch, etc.) opens up more flexible and dynamic gradient possibilities
+
+### Challenges for next week
+- Finalising and polishing everything for completion
+
+---
+
+
+## 18 march 2026
+### What did i do today
+- Made the title more "Sensational"
+
+### how long did it take
+- 2,5 hours
+
+---
+
+## 📋 Week 4 Report — Completion
+
+### Final result
+KRAFTWERK is a fictional German power plant control panel built almost entirely in CSS. Styled as an aged instrument panel. The title drops in letter by letter on load, each letter occasionally getting overcharged and looking distorted.
+
+The panel includes analog gauges, toggle switches, rotary knobs, status LEDs and a retro scroll-drum MW power output display. All controls are fully interconnected — switches kill their related gauges and LEDs, knobs only respond while the plant is running, and turning a switch off mid-run triggers an orange warning flash. Maxing all four knobs while running triggers a full meltdown: red EMERGENCY overlay, screen shake and a flickering power display.
+
+Hidden details include a coffee cup ring stain, an engineer engraving, an 
+inspection stamp and a plant name that fades in on title hover.
+
+![alt text](image-1.png)
+
+### What went smoothly?
+- The title animation/styling.
+
+### What was challenging?
+- File restructuring (week 3) was unexpectedly time-consuming
+- Making the title more "sensational" took a lot of trial and error to get the timing and effects right, especially the overload distortion.
+
+### What are you most proud of?
+- I am most proud of the title animation and styling, as well as the overall cohesiveness of the control panel design and interactivity.
+
+### New insights into the power of CSS
+- CSS can replace a surprising amount of JavaScript for UI interactivity when you think in terms of state via input elements and pseudo-classes
