@@ -223,9 +223,6 @@ This week the bulk of the visual work came together. All elements got styled, th
 - Deciding between the two style variants
 - The full page styling took significantly longer than individual components
 
-### Experiments that 'failed'
-- Tried to randomize the starting values of the range inputs (knobs) using CSS alone, but CSS has no random capabilities that can set initial input values.
-
 ### New insights into the power of CSS
 - CSS alone can handle things typically reserved for JavaScript, such as interactive dials, responsive layouts, and conditional warnings
 - CSS-only interactivity requires thinking differently about state (`:checked`, `:hover`, `@keyframes`, etc.)
@@ -262,7 +259,7 @@ This week the bulk of the visual work came together. All elements got styled, th
 
 ---
 
-## 📋 Week 2 & 3 Report — Progress (Part 2)
+## 📋3 Week Report — Progress
 
 ### Progress so far
 This week was more about polish and hidden details. The title got a visual overhaul, everything was translated to English, and easter eggs were added. A significant amoutn of time went into restructuring files.
@@ -273,9 +270,6 @@ This week was more about polish and hidden details. The title got a visual overh
 
 ### What was challenging?
 - File restructuring took a full 4 hours.
-
-### Experiments that 'failed'
-- I wanted to add sound effects to the control panel using only CSS, but this is not possible as CSS has no audio capabilities.
 
 ### New insights into the power of CSS
 - Color syntax variety (hex, hsl, oklch, etc.) opens up more flexible and dynamic gradient possibilities
@@ -302,8 +296,7 @@ KRAFTWERK is a fictional German power plant control panel built almost entirely 
 
 The panel includes analog gauges, toggle switches, rotary knobs, status LEDs and a retro scroll-drum MW power output display. All controls are fully interconnected — switches kill their related gauges and LEDs, knobs only respond while the plant is running, and turning a switch off mid-run triggers an orange warning flash. Maxing all four knobs while running triggers a full meltdown: red EMERGENCY overlay, screen shake and a flickering power display.
 
-Hidden details include a coffee cup ring stain, an engineer engraving, an 
-inspection stamp and a plant name that fades in on title hover.
+Hidden details include a coffee cup ring stain, an engineer engraving, an inspection stamp and a plant name that fades in on title hover.
 
 ![alt text](image-1.png)
 
@@ -311,8 +304,15 @@ inspection stamp and a plant name that fades in on title hover.
 - The title animation/styling.
 
 ### What was challenging?
-- File restructuring (week 3) was unexpectedly time-consuming
+- File restructuring
 - Making the title more "sensational" took a lot of trial and error to get the timing and effects right, especially the overload distortion.
+
+
+### Experiments that 'failed'
+- I wanted to add sound effects to the control panel using only CSS, but this is not possible as CSS has no audio capabilities.
+- I wanted to add a timer for how long the plant has been running using only CSS, but i could find a correct way to integrate it with the control panel.
+- Tried to randomize the starting values of the range inputs (knobs) using CSS alone, but CSS has no random capabilities that can set initial input values.
+
 
 ### What are you most proud of?
 - I am most proud of the title animation and styling, as well as the overall cohesiveness of the control panel design and interactivity.
