@@ -1,90 +1,93 @@
 # Sources — KRAFTWERK Control Panel
 
-## CSS Things to use??
+## CSS Features Used
 
 ### Core CSS Features
 - [CSS Cascade & @layer — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer)
 - [CSS Nesting — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting)
 - [Container Queries — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+- [Container Style Queries — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@container#container_style_queries)
 - [:target selector — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:target)
 - [CSS Custom Properties — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 - [CSS Grid — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout)
 - [CSS Flexbox — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout)
 - [clamp() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp)
+- [calc() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
+- [hsl() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl)
+- [mix-blend-mode — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode)
+- [aspect-ratio — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio)
+- [pointer-events — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events)
+
+### Pseudo-elements & Selectors
+- [::before / ::after — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/::before)
+- [:checked selector — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
+- [:not() selector — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:not)
+- [:nth-child() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child)
+- [:nth-of-type() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
+- [General sibling combinator (~) — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_combinator)
+- [Child combinator (>) — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_combinator)
 
 ### Styling Form Elements
 - [input[type="range"] — MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range)
 - [input[type="checkbox"] — MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
-- [Styling range inputs (CSS-Tricks)](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/)
-- [:checked selector — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
+- [appearance: none — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/appearance)
+
+### Backgrounds & Visual Effects
+- [CSS Gradients — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_images/Using_CSS_gradients)
+- [repeating-linear-gradient() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/repeating-linear-gradient)
+- [radial-gradient() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient)
+- [box-shadow — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow)
+- [text-shadow — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow)
+- [SVG filter in data URI (feTurbulence noise texture)](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence)
+- [filter: blur() — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 
 ### Animations & Transitions
 - [@keyframes — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
-- [CSS transition — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+- [animation — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation)
+- [transition — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
 - [cubic-bezier — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function)
+- [steps() easing — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function#steps)
+- [transform — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+- [prefers-reduced-motion — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+- [prefers-color-scheme — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
 
 ---
 
 ## W3C Formal Specifications
 
-- [CSS Cascading and Inheritance Level 5 — W3C](https://www.w3.org/TR/css-cascade-5/) *(defines @layer)*
-- [CSS Containment Module Level 3 — W3C](https://www.w3.org/TR/css-contain-3/) *(defines container queries)*
+- [CSS Cascading and Inheritance Level 5 — W3C](https://www.w3.org/TR/css-cascade-5/)
+- [CSS Containment Module Level 3 — W3C](https://www.w3.org/TR/css-contain-3/)
 - [CSS Nesting Module — W3C](https://www.w3.org/TR/css-nesting-1/)
 - [CSS Custom Properties for Cascading Variables — W3C](https://www.w3.org/TR/css-variables-1/)
 
 ---
 
-## Typography to use??
+## Typography Used
 
-- [Orbitron — Google Fonts](https://fonts.google.com/specimen/Orbitron)
-- [Share Tech Mono — Google Fonts](https://fonts.google.com/specimen/Share+Tech+Mono)
-- [Titillium Web — Google Fonts](https://fonts.google.com/specimen/Titillium+Web)
-
----
-
-## SVG for background elements???
-
-- [SVG `<line>` — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line)
-- [SVG `<circle>` — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle)
-- [SVG `<rect>` — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect)
-- [SVG `<text>` — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text)
+- [Teko — Google Fonts](https://fonts.google.com/specimen/Teko) *(display / logotype)*
+- [Share Tech Mono — Google Fonts](https://fonts.google.com/specimen/Share+Tech+Mono) *(UI labels)*
+- [VT323 — Google Fonts](https://fonts.google.com/specimen/VT323) *(scroll-drum MW display)*
 
 ---
 
-## CSS Architecture Methodology
+## SVG Used (inline data URI)
 
-- [CUBE CSS methodology](https://cube.fyi/)
-- [ITCSS — Inverted Triangle CSS (SmashingMagazine)](https://www.smashingmagazine.com/2022/05/you-need-css-reset/)
-- [Every Layout — intrinsic layout patterns](https://every-layout.dev/)
+- [feTurbulence — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence) *(worn paint grain texture on panel)*
+- [feColorMatrix — MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feColorMatrix)
 
 ---
 
 ## Design Inspiration
 
 - [The uploaded photograph of an East German power station control room](https://live.staticflickr.com/65535/55045008234_0c5e94ce69_c.jpg)
-- [Kraftwerk Lippendorf control room (Wikipedia)](https://en.wikipedia.org/wiki/Lippendorf_power_station)
 - [Flickr: Abandoned power station control panels](https://www.flickr.com/search/?text=abandoned+power+station+control+room)
 
 ---
 
-## Timer docs
+## Reference Articles
 
-- [timer](https://frontendmasters.com/blog/how-to-make-a-css-timer/)
-
-## Coffee stain docs
-
-- [Coffee stain](https://alvaromontoro.com/blog/68035/css-art-drawing-a-coffee-stain)
-
-## Control panel ideas
-
-- Power plant
-- Space ship
-- Submarine
-- Nuclear missile silo
-- Factory
-- Steampunk machine
-- Time machine
-- Synthesizer
+- [CSS-only timer — Frontend Masters](https://frontendmasters.com/blog/how-to-make-a-css-timer/)
+- [CSS coffee stain — Alvaro Montoro](https://alvaromontoro.com/blog/68035/css-art-drawing-a-coffee-stain)
 
 
 
